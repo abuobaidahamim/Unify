@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unify – Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="signup-card">
+            <!-- Logo and Brand -->
+            <div class="brand">
+                <div class="logo-placeholder small"></div>
+                <h2>Unify</h2>
+            </div>
+            <p class="tagline small">Create your account</p>
+
+            <!-- Sign-up Form -->
+            <form id="signupForm">
+                <div class="input-group label-outside">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Use only student email" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+                <div class="input-group label-outside">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Use a strong password" required>
+                    <!-- Password strength requirements (appear on focus) -->
+                    <div class="password-requirements" id="passwordRequirements">
+                        <p class="req-title">Your password must contain:</p>
+                        <ul>
+                            <li id="reqLength">At least 8 characters</li>
+                            <li id="reqLower">One lowercase letter</li>
+                            <li id="reqUpper">One uppercase letter</li>
+                            <li id="reqNumber">One number</li>
+                            <li id="reqSpecial">One special character (e.g., !@#$%^&*)</li>
+                        </ul>
+                    </div>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+                <button type="submit" class="signup-btn">Sign Up</button>
+            </form>
+
+            <!-- Link to Login -->
+            <div class="login-link">
+                Already have an account? <a href="index.html">Log in</a>
+            </div>
+        </div>
+    </div>
+
+        <!-- Firebase Compatibility SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAAlddaT4Lvy4Mq4gzsCyREuoE9J52WIcM",
+        authDomain: "unify-8d6a4.firebaseapp.com",
+        projectId: "unify-8d6a4",
+        storageBucket: "unify-8d6a4.firebasestorage.app",
+        messagingSenderId: "307932477498",
+        appId: "1:307932477498:web:1f003e61cd355e77389d03"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- Only load signup.js on this page -->
+    <script type="module" src="js/signup.js"></script>
+</body>
+</body>
+</html>
