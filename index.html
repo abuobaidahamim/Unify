@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unify – Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <!-- Logo and Brand -->
+            <div class="brand">
+                <div class="logo-placeholder"></div>
+                <h1>Unify</h1>
+            </div>
+            <p class="tagline">Connecting Experience with Ambition.</p>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="email" id="email" name="email" placeholder="Enter your student email" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="login-btn">Log in</button>
+            </form>
+
+            <!-- Forgot Password Link -->
+            <div class="forgot-password">
+                <a href="#">Forgotten password?</a>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider"></div>
+
+            <!-- Create New Account Button -->
+            <a href="signup.html" class="signup-btn">Create new account</a>
+
+            <!-- Footer removed as requested -->
+        </div>
+    </div>
+
+    <!-- Firebase Compatibility SDK (simpler, matches our code) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration (replace with your actual keys)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAlddaT4Lvy4Mq4gzsCyREuoE9J52WIcM",
+            authDomain: "unify-8d6a4.firebaseapp.com",
+            projectId: "unify-8d6a4",
+            storageBucket: "unify-8d6a4.firebasestorage.app",
+            messagingSenderId: "307932477498",
+            appId: "1:307932477498:web:1f003e61cd355e77389d03"
+        };
+  
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+
+
+    <!-- JavaScript files -->
+    <script type="module" src="js/login.js"></script>
+</body>
+</html>
