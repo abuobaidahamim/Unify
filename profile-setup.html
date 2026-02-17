@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unify – Complete Your Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="setup-card">
+            <!-- Logo and Brand -->
+            <div class="brand">
+                <div class="logo-placeholder small"></div>
+                <h2>Unify</h2>
+            </div>
+            <p class="tagline small">Tell us about yourself</p>
+
+            <!-- Profile Setup Form -->
+            <form id="profileForm">
+                <!-- First Name & Last Name (side by side) -->
+                <div class="name-row">
+                    <div class="input-group label-outside">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="e.g., John" required>
+                    </div>
+                    <div class="input-group label-outside">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="e.g., Doe" required>
+                    </div>
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="input-group label-outside">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+
+                <!-- University (dropdown) -->
+                <div class="input-group label-outside">
+                    <label for="university">University</label>
+                    <select id="university" name="university" required>
+                        <option value="" disabled selected>Select your university</option>
+                        <option value="DIU">Daffodil International University</option>
+                        <option value="DU">University of Dhaka</option>
+                        <option value="BUET">BUET</option>
+                        <option value="JU">Jahangirnagar University</option>
+                        <!-- Add more as needed -->
+                    </select>
+                </div>
+
+                <!-- Department (dropdown) -->
+                <div class="input-group label-outside">
+                    <label for="department">Department</label>
+                    <select id="department" name="department" required>
+                        <option value="" disabled selected>Select your department</option>
+                        <option value="CSE">Computer Science & Engineering</option>
+                        <option value="EEE">Electrical & Electronic Engineering</option>
+                        <option value="BBA">Business Administration</option>
+                        <option value="English">English</option>
+                    </select>
+                </div>
+
+                <!-- Major (dropdown with "None" option) -->
+                <div class="input-group label-outside">
+                    <label for="major">Major (if any)</label>
+                    <select id="major" name="major">
+                        <option value="" disabled selected>Select major (or None)</option>
+                        <option value="None">None</option>
+                        <option value="CS">Computer Science</option>
+                        <option value="Software Engineering">Software Engineering</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Marketing">Marketing</option>
+                    </select>
+                </div>
+
+                <!-- Student / Alumni Status (radio) -->
+                <div class="input-group label-outside">
+                    <label>Status</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="status" value="student" required> Student</label>
+                        <label><input type="radio" name="status" value="alumni"> Alumni</label>
+                    </div>
+                </div>
+
+                <!-- Batch (conditional, shown only if student) -->
+                <div class="input-group label-outside conditional" id="batchGroup" style="display: none;">
+                    <label for="batch">Batch</label>
+                    <input type="text" id="batch" name="batch" placeholder="e.g., 2024">
+                </div>
+
+                <!-- Employment Status (radio) -->
+                <div class="input-group label-outside">
+                    <label>Are you currently employed?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="employment" value="job"> Job</label>
+                        <label><input type="radio" name="employment" value="entrepreneur"> Entrepreneur</label>
+                        <label><input type="radio" name="employment" value="business"> Business</label>
+                        <label><input type="radio" name="employment" value="none"> None</label>
+                    </div>
+                </div>
+
+                <!-- Conditional fields for employment -->
+                <!-- Job fields -->
+                <div class="conditional" id="jobFields" style="display: none;">
+                    <div class="input-group label-outside">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company" placeholder="e.g., Google">
+                    </div>
+                    <div class="input-group label-outside">
+                        <label for="role">Role</label>
+                        <input type="text" id="role" name="role" placeholder="e.g., Software Engineer">
+                    </div>
+                </div>
+
+                <!-- Entrepreneur fields -->
+                <div class="conditional" id="entrepreneurFields" style="display: none;">
+                    <div class="input-group label-outside">
+                        <label for="sector">Sector</label>
+                        <input type="text" id="sector" name="sector" placeholder="e.g., Tech, Education">
+                    </div>
+                </div>
+
+                <!-- Business fields -->
+                <div class="conditional" id="businessFields" style="display: none;">
+                    <div class="input-group label-outside">
+                        <label for="businessType">Type of Business</label>
+                        <input type="text" id="businessType" name="businessType" placeholder="e.g., Retail, Consulting">
+                    </div>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="create-btn">Create Account</button>
+            </form>
+
+            <!-- Link to login if they already have account (optional) -->
+            <div class="login-link">
+                Already have an account? <a href="index.html">Log in</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Compatibility SDK (simpler, matches our code) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration (replace with your actual keys)
+    const firebaseConfig = {
+        apiKey: "AIzaSyAAlddaT4Lvy4Mq4gzsCyREuoE9J52WIcM",
+        authDomain: "unify-8d6a4.firebaseapp.com",
+        projectId: "unify-8d6a4",
+        storageBucket: "unify-8d6a4.firebasestorage.app",
+        messagingSenderId: "307932477498",
+        appId: "1:307932477498:web:1f003e61cd355e77389d03"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    </script>
+
+
+
+    <script type="module" src="js/profile-setup.js"></script>
+</body>
+</html>
