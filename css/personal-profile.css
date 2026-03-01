@@ -1,0 +1,390 @@
+/* profile.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+}
+
+/* Navbar (same as home) */
+.navbar {
+    background: linear-gradient(135deg, #a0d2ff, #c4e0ff);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: contain; /* ensures the image scales without distortion */
+}
+
+.site-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1877f2;
+}
+
+.nav-center {
+    flex: 1;
+    max-width: 600px;
+    margin: 0 20px;
+    position: relative;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 30px;
+    padding: 5px 10px;
+}
+
+.search-container input {
+    flex: 1;
+    border: none;
+    padding: 8px 12px;
+    font-size: 1rem;
+    outline: none;
+    background: transparent;
+}
+
+.search-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 10px;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.search-container button:hover {
+    color: #1877f2;
+}
+
+.filter-btn {
+    border-left: 1px solid #ccc;
+    border-radius: 0;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icon {
+    color: #333;
+    font-size: 1.3rem;
+    text-decoration: none;
+    position: relative;
+}
+
+.nav-icon:hover {
+    color: #1877f2;
+}
+
+.nav-icon[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 101;
+}
+
+.profile-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid white;
+}
+
+.profile-icon img:hover {
+    border-color: #1877f2;
+}
+
+/* Profile Container */
+.profile-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Profile Header */
+.profile-header {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.profile-pic img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 5px;
+}
+
+.profile-info p {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+.edit-profile-btn {
+    padding: 10px 24px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.edit-profile-btn:hover {
+    background-color: #166fe5;
+}
+
+/* Two Column Layout */
+.profile-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Left Column - Personal Details */
+.personal-details {
+    flex: 1 1 33.333%;
+    max-width: 33.333%;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 100px; /* below navbar + margin */
+    align-self: start;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.details-header h3 {
+    font-size: 1.2rem;
+    color: #1f2937;
+}
+
+.edit-icon {
+    color: #1877f2;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.edit-icon:hover {
+    color: #166fe5;
+}
+
+.details-list {
+    list-style: none;
+    padding: 0;
+}
+
+.details-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.details-list li:last-child {
+    border-bottom: none;
+}
+
+.details-list i {
+    width: 20px;
+    color: #1877f2;
+    font-size: 1.1rem;
+}
+
+.details-list span {
+    color: #1f2937;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.details-list strong {
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+/* Right Column - Posts */
+.profile-posts {
+    flex: 1 1 66.666%;
+    max-width: 66.666%;
+}
+
+.post-box {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.share-heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 15px;
+}
+
+.post-input-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.post-input-area img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.post-input-area textarea {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 10px 15px;
+    resize: none;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.post-input-area textarea:focus {
+    border-color: #1877f2;
+}
+
+#postBtn {
+    float: right;
+    padding: 8px 20px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#postBtn:hover {
+    background-color: #166fe5;
+}
+
+.posts-feed {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.post-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.post-item:last-child {
+    border-bottom: none;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.post-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.post-author {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.post-time {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-left: auto;
+}
+
+.post-content {
+    margin-left: 50px;
+    color: #1f2937;
+    line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-content {
+        flex-direction: column;
+    }
+    .personal-details {
+        max-width: 100%;
+        position: static;
+    }
+    .profile-posts {
+        max-width: 100%;
+    }
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
