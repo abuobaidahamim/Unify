@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unify – My Profile</title>
+    <link rel="stylesheet" href="css/personal-profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Navbar (same as home) -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="logo.jpeg" alt="Unify Logo" class="nav-logo">
+            <span class="site-name">Unify</span>
+        </div>
+        <div class="nav-center">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search by name...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+                <button id="filterBtn" class="filter-btn"><i class="fas fa-sliders-h"></i></button>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="home.html" class="nav-icon" title="Home"><i class="fas fa-home"></i></a>
+            <a href="#" class="nav-icon" title="Friends"><i class="fas fa-user-friends"></i></a>
+            <a href="#" class="nav-icon" title="Messages"><i class="fas fa-envelope"></i></a>
+            <a href="#" class="nav-icon" title="Notifications"><i class="fas fa-bell"></i></a>
+            <div class="profile-icon" id="profileIcon">
+                <img src="https://via.placeholder.com/40" alt="Profile" id="navProfilePic">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Profile Container -->
+    <div class="profile-container">
+        <!-- Top Profile Card -->
+        <div class="profile-header">
+            <div class="profile-pic">
+                <img src="https://via.placeholder.com/100" alt="Profile Picture" id="profilePic">
+            </div>
+            <div class="profile-info">
+                <h1 id="profileName">Loading...</h1>
+                <p id="profileBio">No bio yet.</p>
+            </div>
+            <button id="editProfileBtn" class="edit-profile-btn">Edit Profile</button>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="profile-content">
+            <!-- Left Column: Personal Details -->
+            <aside class="personal-details">
+                <div class="details-header">
+                    <h3>Personal Details</h3>
+                    <i class="fas fa-edit edit-icon" id="editDetailsIcon"></i>
+                </div>
+                <ul class="details-list">
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><strong>Current Location:</strong> <span id="currentLocation">Not set</span></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-home"></i>
+                        <span><strong>Permanent Location:</strong> <span id="permanentLocation">Not set</span></span>
+                    </li>
+                    <li id="jobItem" style="display: none;">
+                        <i class="fas fa-briefcase"></i>
+                        <span><strong>Job:</strong> <span id="jobDetails"></span></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-university"></i>
+                        <span><strong>University:</strong> <span id="university">Not set</span></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-graduation-cap"></i>
+                        <span><strong>Department (Major):</strong> <span id="departmentMajor">Not set</span></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-calendar-alt"></i>
+                        <span><strong>Batch:</strong> <span id="batch">Not set</span></span>
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- Right Column: Posts -->
+            <main class="profile-posts">
+                <div class="post-box">
+                    <h3 class="share-heading">Share your journey</h3>
+                    <div class="post-input-area">
+                        <img src="https://via.placeholder.com/40" alt="You" id="posterPic">
+                        <textarea id="postText" placeholder="Share your journey..."></textarea>
+                    </div>
+                    <button id="postBtn">Post</button>
+                </div>
+                <div id="postsFeed" class="posts-feed">
+                    <p>No posts yet.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAlddaT4Lvy4Mq4gzsCyREuoE9J52WIcM",
+            authDomain: "unify-8d6a4.firebaseapp.com",
+            projectId: "unify-8d6a4",
+            storageBucket: "unify-8d6a4.firebasestorage.app",
+            messagingSenderId: "307932477498",
+            appId: "1:307932477498:web:1f003e61cd355e77389d03"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- Our modules -->
+    <script type="module" src="js/personal-profile.js"></script>
+</body>
+</html>
