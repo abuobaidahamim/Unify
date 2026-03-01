@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unify – Edit Profile</title>
+    <link rel="stylesheet" href="css/edit-profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="edit-card">
+            <div class="brand">
+                <!-- Logo removed -->
+                <h1>Edit Profile</h1>
+            </div>
+
+            <form id="editProfileForm">
+                <!-- Profile Picture Upload -->
+                <div class="form-section">
+                    <h3>Profile Picture</h3>
+                    <div class="profile-pic-upload">
+                        <img id="profilePicPreview" src="https://via.placeholder.com/100" alt="Profile Preview">
+                        <div class="upload-controls">
+                            <input type="file" id="profilePicInput" accept="image/jpeg,image/png,image/gif,image/webp">
+                            <button type="button" id="uploadPicBtn" class="secondary-btn">Upload New Picture</button>
+                            <p class="note">Accepted formats: JPG, PNG, GIF, WebP</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bio and Addresses -->
+                <div class="form-section">
+                    <h3>About You</h3>
+                    <div class="input-group">
+                        <label for="bio">Bio</label>
+                        <textarea id="bio" placeholder="Tell something about yourself..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="currentLocation">Current Location</label>
+                        <input type="text" id="currentLocation" placeholder="e.g., Dhaka, Bangladesh">
+                    </div>
+                    <div class="input-group">
+                        <label for="permanentLocation">Permanent Location</label>
+                        <input type="text" id="permanentLocation" placeholder="e.g., Chittagong">
+                    </div>
+                </div>
+
+                <!-- Original Profile Setup Fields -->
+                <div class="form-section">
+                    <h3>Basic Information</h3>
+                    <div class="name-row">
+                        <div class="input-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="university">University</label>
+                        <select id="university" required>
+                            <option value="" disabled>Select your university</option>
+                            <option value="DIU">Daffodil International University</option>
+                            <option value="DU">University of Dhaka</option>
+                            <option value="BUET">BUET</option>
+                            <option value="JU">Jahangirnagar University</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="department">Department</label>
+                        <select id="department" required>
+                            <option value="" disabled>Select your department</option>
+                            <option value="CSE">Computer Science & Engineering</option>
+                            <option value="EEE">Electrical & Electronic Engineering</option>
+                            <option value="BBA">Business Administration</option>
+                            <option value="English">English</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="major">Major (if any)</label>
+                        <select id="major">
+                            <option value="" disabled>Select major (or None)</option>
+                            <option value="None">None</option>
+                            <option value="CS">Computer Science</option>
+                            <option value="Software Engineering">Software Engineering</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Marketing">Marketing</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Status</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="status" value="student" required> Student</label>
+                            <label><input type="radio" name="status" value="alumni"> Alumni</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group conditional" id="batchGroup" style="display: none;">
+                        <label for="batch">Batch</label>
+                        <input type="text" id="batch" placeholder="e.g., 2024">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Employment Status</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="employment" value="job"> Job</label>
+                            <label><input type="radio" name="employment" value="entrepreneur"> Entrepreneur</label>
+                            <label><input type="radio" name="employment" value="business"> Business</label>
+                            <label><input type="radio" name="employment" value="none"> None</label>
+                        </div>
+                    </div>
+
+                    <!-- Conditional fields -->
+                    <div class="conditional" id="jobFields" style="display: none;">
+                        <div class="input-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company">
+                        </div>
+                        <div class="input-group">
+                            <label for="role">Role</label>
+                            <input type="text" id="role">
+                        </div>
+                    </div>
+
+                    <div class="conditional" id="entrepreneurFields" style="display: none;">
+                        <div class="input-group">
+                            <label for="sector">Sector</label>
+                            <input type="text" id="sector">
+                        </div>
+                    </div>
+
+                    <div class="conditional" id="businessFields" style="display: none;">
+                        <div class="input-group">
+                            <label for="businessType">Type of Business</label>
+                            <input type="text" id="businessType">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+
+            <div class="login-link">
+                <a href="personal-profile.html">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase (unchanged) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAlddaT4Lvy4Mq4gzsCyREuoE9J52WIcM",
+            authDomain: "unify-8d6a4.firebaseapp.com",
+            projectId: "unify-8d6a4",
+            storageBucket: "unify-8d6a4.firebasestorage.app",
+            messagingSenderId: "307932477498",
+            appId: "1:307932477498:web:1f003e61cd355e77389d03"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script type="module" src="js/edit-profile.js"></script>
+</body>
+</html>
