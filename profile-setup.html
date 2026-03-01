@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unify – Complete Your Profile</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <div class="container">
@@ -37,45 +38,47 @@
                     <input type="date" id="dob" name="dob" required>
                 </div>
 
-                <!-- University (dropdown) -->
+                <!-- University (dropdown) – only Daffodil International University -->
                 <div class="input-group label-outside">
                     <label for="university">University</label>
                     <select id="university" name="university" required>
                         <option value="" disabled selected>Select your university</option>
-                        <option value="DIU">Daffodil International University</option>
-                        <option value="DU">University of Dhaka</option>
-                        <option value="BUET">BUET</option>
-                        <option value="JU">Jahangirnagar University</option>
-                        <!-- Add more as needed -->
+                        <option value="Daffodil International University">Daffodil International University</option>
                     </select>
                 </div>
 
-                <!-- Department (dropdown) -->
+                <!-- Department (dropdown) with new list -->
                 <div class="input-group label-outside">
                     <label for="department">Department</label>
                     <select id="department" name="department" required>
                         <option value="" disabled selected>Select your department</option>
-                        <option value="CSE">Computer Science & Engineering</option>
-                        <option value="EEE">Electrical & Electronic Engineering</option>
-                        <option value="BBA">Business Administration</option>
-                        <option value="English">English</option>
+                        <option value="Software Engineering (SWE)">Software Engineering (SWE)</option>
+                        <option value="Innovation & Entrepreneurship">Innovation & Entrepreneurship</option>
+                        <option value="Computing and Information System (CIS)">Computing and Information System (CIS)</option>
+                        <option value="Multimedia & Creative Technology (MCT)">Multimedia & Creative Technology (MCT)</option>
+                        <option value="Information Technology & Management (ITM)">Information Technology & Management (ITM)</option>
+                        <option value="Law">Law</option>
+                        <option value="Journalism, Media and Communication (JMC)">Journalism, Media and Communication (JMC)</option>
+                        <option value="Textile Engineering (TE)">Textile Engineering (TE)</option>
+                        <option value="Architecture">Architecture</option>
+                        <option value="Civil Engineering (CE)">Civil Engineering (CE)</option>
+                        <option value="Pharmacy">Pharmacy</option>
+                        <option value="Nutrition and Food Engineering (NFE)">Nutrition and Food Engineering (NFE)</option>
+                        <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                        <option value="Electrical & Electronic Engineering">Electrical & Electronic Engineering</option>
                     </select>
                 </div>
 
-                <!-- Major (dropdown with "None" option) -->
+                <!-- Major (dropdown, dynamically populated) -->
                 <div class="input-group label-outside">
                     <label for="major">Major (if any)</label>
                     <select id="major" name="major">
                         <option value="" disabled selected>Select major (or None)</option>
-                        <option value="None">None</option>
-                        <option value="CS">Computer Science</option>
-                        <option value="Software Engineering">Software Engineering</option>
-                        <option value="Data Science">Data Science</option>
-                        <option value="Marketing">Marketing</option>
+                        <!-- Options will be inserted by JavaScript -->
                     </select>
                 </div>
 
-                <!-- Student / Alumni Status (radio) -->
+                <!-- Student / Alumni Status (radio) – always show batch -->
                 <div class="input-group label-outside">
                     <label>Status</label>
                     <div class="radio-group">
@@ -84,18 +87,17 @@
                     </div>
                 </div>
 
-                <!-- Batch (conditional, shown only if student) -->
-                <div class="input-group label-outside conditional" id="batchGroup" style="display: none;">
+                <!-- Batch – always visible (no conditional) -->
+                <div class="input-group label-outside">
                     <label for="batch">Batch</label>
-                    <input type="text" id="batch" name="batch" placeholder="e.g., 2024">
+                    <input type="text" id="batch" name="batch" placeholder="e.g., 2024" required>
                 </div>
 
-                <!-- Employment Status (radio) -->
+                <!-- Employment Status (radio) – now Job, Business, None -->
                 <div class="input-group label-outside">
                     <label>Are you currently employed?</label>
                     <div class="radio-group">
                         <label><input type="radio" name="employment" value="job"> Job</label>
-                        <label><input type="radio" name="employment" value="entrepreneur"> Entrepreneur</label>
                         <label><input type="radio" name="employment" value="business"> Business</label>
                         <label><input type="radio" name="employment" value="none"> None</label>
                     </div>
@@ -114,16 +116,12 @@
                     </div>
                 </div>
 
-                <!-- Entrepreneur fields -->
-                <div class="conditional" id="entrepreneurFields" style="display: none;">
+                <!-- Business fields (merged entrepreneur & business) -->
+                <div class="conditional" id="businessFields" style="display: none;">
                     <div class="input-group label-outside">
                         <label for="sector">Sector</label>
                         <input type="text" id="sector" name="sector" placeholder="e.g., Tech, Education">
                     </div>
-                </div>
-
-                <!-- Business fields -->
-                <div class="conditional" id="businessFields" style="display: none;">
                     <div class="input-group label-outside">
                         <label for="businessType">Type of Business</label>
                         <input type="text" id="businessType" name="businessType" placeholder="e.g., Retail, Consulting">
@@ -141,27 +139,24 @@
         </div>
     </div>
 
-    <!-- Firebase Compatibility SDK (simpler, matches our code) -->
+    <!-- Firebase Compatibility SDK (same as before) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
 
     <script>
-    // Your web app's Firebase configuration (replace with your actual keys)
-    const firebaseConfig = {
-        apiKey: "AIzaSyAAlddaT4Lvy4Mq4gzsCyREuoE9J52WIcM",
-        authDomain: "unify-8d6a4.firebaseapp.com",
-        projectId: "unify-8d6a4",
-        storageBucket: "unify-8d6a4.firebasestorage.app",
-        messagingSenderId: "307932477498",
-        appId: "1:307932477498:web:1f003e61cd355e77389d03"
-    };
-    
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+        // Your web app's Firebase configuration (use the correct key)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAlddaT4Lvy4Mq4gzsCyREuoE9J52WIcM",
+            authDomain: "unify-8d6a4.firebaseapp.com",
+            projectId: "unify-8d6a4",
+            storageBucket: "unify-8d6a4.firebasestorage.app",
+            messagingSenderId: "307932477498",
+            appId: "1:307932477498:web:1f003e61cd355e77389d03"
+        };
+        firebase.initializeApp(firebaseConfig);
     </script>
-
-
 
     <script type="module" src="js/profile-setup.js"></script>
 </body>
