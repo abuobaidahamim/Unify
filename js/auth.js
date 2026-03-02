@@ -53,18 +53,21 @@ export function isPasswordStrong(password) {
  * @param {string} password
  * @returns {Promise<{success: boolean, message?: string, user?: object}>}
  */
+
 export async function loginUser(email, password) {
     try {
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
         return { success: true, user: userCredential.user };
     } catch (error) {
+        console.error("Full login error:", error);
         let message = "Login failed. Please check your credentials.";
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-            message = "Invalid email or password.";
+        let code = error.code;
+        if (error.code === 'auth/invalid-login-credentials') {
+            message = "Invalid email or password. If you don't have an account, please sign up.";
         } else if (error.code === 'auth/too-many-requests') {
             message = "Too many failed attempts. Try again later.";
         }
-        return { success: false, message };
+        return { success: false, message, code };
     }
 }
 
@@ -74,22 +77,6 @@ export async function loginUser(email, password) {
  * @param {string} password
  * @returns {Promise<{success: boolean, message?: string, user?: object}>}
  */
-// export async function registerUser(email, password) {
-//     try {
-//         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-//         return { success: true, user: userCredential.user };
-//     } catch (error) {
-//         let message = "Registration failed.";
-//         if (error.code === 'auth/email-already-in-use') {
-//             message = "This email is already registered.";
-//         } else if (error.code === 'auth/invalid-email') {
-//             message = "Invalid email address.";
-//         } else if (error.code === 'auth/weak-password') {
-//             message = "Password is too weak. Use at least 6 characters.";
-//         }
-//         return { success: false, message };
-//     }
-// }
 
 export async function registerUser(email, password) {
     try {
@@ -145,24 +132,31 @@ export function getCurrentUser() {
 
 
 
-
-
 /**
  * Get the current user's profile data from Firestore.
  * @returns {Promise<Object|null>} The user's profile data or null if not found.
  */
+
+
 export async function getCurrentUserProfile() {
     const user = auth.currentUser;
-    if (!user) return null;
+    if (!user) {
+        console.log("getCurrentUserProfile: No current user");
+        return null;
+    }
     try {
+        console.log("getCurrentUserProfile: Fetching profile for UID:", user.uid);
         const doc = await db.collection('users').doc(user.uid).get();
+        console.log("getCurrentUserProfile: Doc exists?", doc.exists);
         if (doc.exists) {
+            console.log("getCurrentUserProfile: Data:", doc.data());
             return doc.data();
         } else {
+            console.log("getCurrentUserProfile: Document does not exist");
             return null;
         }
     } catch (error) {
-        console.error("Error fetching user profile:", error);
+        console.error("Error fetching profile:", error);
         return null;
     }
 }
@@ -174,4 +168,52 @@ export async function getCurrentUserProfile() {
 export async function userHasProfile() {
     const profile = await getCurrentUserProfile();
     return profile !== null;
+}
+
+/**
+ * Update user profile data in Firestore.
+ * @param {Object} profileData - The fields to update.
+ * @returns {Promise<{success: boolean, message?: string}>}
+ */
+export async function updateUserProfile(profileData) {
+    const user = auth.currentUser;
+    if (!user) return { success: false, message: "Not authenticated" };
+    try {
+        await db.collection('users').doc(user.uid).update(profileData);
+        return { success: true };
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        return { success: false, message: error.message };
+    }
+}
+
+/**
+ * Upload a profile picture to Firebase Storage and update user document.
+ * @param {File} file - The image file to upload.
+ * @returns {Promise<string>} The download URL of the uploaded image.
+ */
+
+export async function uploadProfilePicture(file) {
+    const user = auth.currentUser;
+    if (!user) throw new Error("Not authenticated");
+
+    console.log('Starting upload to Firebase Storage');
+    const storageRef = firebase.storage().ref();
+    const fileRef = storageRef.child(`profilePics/${user.uid}`);
+
+    try {
+        // Upload the file
+        const snapshot = await fileRef.put(file);
+        console.log('File uploaded, getting download URL...');
+        const downloadURL = await snapshot.ref.getDownloadURL();
+        console.log('Download URL obtained:', downloadURL);
+
+        // Update Firestore
+        await db.collection('users').doc(user.uid).update({ profilePicURL: downloadURL });
+        console.log('Firestore updated with profilePicURL');
+        return downloadURL;
+    } catch (error) {
+        console.error('Error in uploadProfilePicture:', error);
+        throw error; // Re-throw so the caller can handle it
+    }
 }
