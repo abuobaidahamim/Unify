@@ -23,12 +23,20 @@
                 <button id="searchBtn"><i class="fas fa-search"></i></button>
                 <button id="filterBtn" class="filter-btn"><i class="fas fa-sliders-h"></i></button>
             </div>
+            <!-- Filter Modal -->
+            <div id="filterModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Filter Users</h3>
+                    <div id="filterSteps"></div>
+                </div>
+            </div>
         </div>
         <div class="nav-right">
-            <a href="home.html" class="nav-icon" title="Home"><i class="fas fa-home"></i></a>
-            <a href="#" class="nav-icon" title="Friends"><i class="fas fa-user-friends"></i></a>
-            <a href="#" class="nav-icon" title="Messages"><i class="fas fa-envelope"></i></a>
-            <a href="#" class="nav-icon" title="Notifications"><i class="fas fa-bell"></i></a>
+            <a href="home.html" class="nav-icon" data-tooltip="Home"><i class="fas fa-home"></i></a>
+            <a href="#" class="nav-icon" data-tooltip="Friends"><i class="fas fa-user-friends"></i></a>
+            <a href="#" class="nav-icon" data-tooltip="Messages"><i class="fas fa-envelope"></i></a>
+            <a href="#" class="nav-icon" data-tooltip="Notifications"><i class="fas fa-bell"></i></a>
             <div class="profile-icon" id="profileIcon">
                 <img src="https://via.placeholder.com/40" alt="Profile" id="navProfilePic">
             </div>
@@ -121,5 +129,6 @@
 
     <!-- Our modules -->
     <script type="module" src="js/personal-profile.js"></script>
+    <script type="module" src="js/filter.js"></script>
 </body>
 </html>
