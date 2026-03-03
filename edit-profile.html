@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="css/edit-profile.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,17 +16,16 @@
             <div class="brand">
                 <h1>Edit Profile</h1>
             </div>
-
             <form id="editProfileForm">
-                <!-- Profile Picture Upload -->
+                <!-- Profile Picture Upload (modified) -->
                 <div class="form-section">
                     <h3>Profile Picture</h3>
                     <div class="profile-pic-upload">
-                        <img id="profilePicPreview" src="https://via.placeholder.com/100" alt="Profile Preview">
+                        <img id="profilePicPreview" src="https://placehold.co/100" alt="Profile Preview">
                         <div class="upload-controls">
                             <input type="file" id="profilePicInput" accept="image/jpeg,image/png,image/gif,image/webp">
                             <button type="button" id="uploadPicBtn" class="secondary-btn">Upload New Picture</button>
-                            <p class="note">Accepted formats: JPG, PNG, GIF, WebP</p>
+                            <p class="note">Accepted formats: JPG, PNG, GIF, WebP etc.</p>
                         </div>
                     </div>
                 </div>
@@ -154,11 +155,51 @@
                     </div>
                 </div>
 
+                <!-- Social Media Links -->
+                <div class="form-section">
+                    <h3>Social Media Links</h3>
+                    <div class="input-group">
+                        <label for="github">GitHub</label>
+                        <input type="url" id="github" placeholder="https://github.com/username">
+                    </div>
+                    <div class="input-group">
+                        <label for="linkedin">LinkedIn</label>
+                        <input type="url" id="linkedin" placeholder="https://linkedin.com/in/username">
+                    </div>
+                    <div class="input-group">
+                        <label for="facebook">Facebook</label>
+                        <input type="url" id="facebook" placeholder="https://facebook.com/username">
+                    </div>
+                    <div class="input-group">
+                        <label for="instagram">Instagram</label>
+                        <input type="url" id="instagram" placeholder="https://instagram.com/username">
+                    </div>
+                    <div class="input-group">
+                        <label for="x">X (Twitter)</label>
+                        <input type="url" id="x" placeholder="https://x.com/username">
+                    </div>
+                </div>
+
                 <button type="submit" class="save-btn">Save Changes</button>
             </form>
 
             <div class="login-link">
                 <a href="personal-profile.html">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crop Modal -->
+    <div id="cropModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close" id="cropModalClose">&times;</span>
+            <h3>Crop Photo</h3>
+            <div style="max-height: 400px; overflow: hidden;">
+                <img id="cropImage" src="" style="max-width: 100%;">
+            </div>
+            <div style="margin-top: 15px; text-align: right;">
+                <button class="secondary" id="cropCancel">Cancel</button>
+                <button class="primary" id="cropSave">Save</button>
             </div>
         </div>
     </div>
