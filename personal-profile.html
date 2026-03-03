@@ -36,9 +36,9 @@
             <a href="home.html" class="nav-icon" data-tooltip="Home"><i class="fas fa-home"></i></a>
             <a href="#" class="nav-icon" data-tooltip="Friends"><i class="fas fa-user-friends"></i></a>
             <a href="#" class="nav-icon" data-tooltip="Messages"><i class="fas fa-envelope"></i></a>
-            <a href="#" class="nav-icon" data-tooltip="Notifications"><i class="fas fa-bell"></i></a>
+            <a href="notifications.html" class="nav-icon" data-tooltip="Notifications"><i class="fas fa-bell"></i></a>
             <div class="profile-icon" id="profileIcon">
-                <img src="https://via.placeholder.com/40" alt="Profile" id="navProfilePic">
+                <img src="https://placehold.co/40" alt="Profile" id="navProfilePic">
             </div>
         </div>
     </nav>
@@ -48,7 +48,7 @@
         <!-- Top Profile Card -->
         <div class="profile-header">
             <div class="profile-pic">
-                <img src="https://via.placeholder.com/100" alt="Profile Picture" id="profilePic">
+                <img src="https://placehold.co/100" alt="Profile Picture" id="profilePic">
             </div>
             <div class="profile-info">
                 <h1 id="profileName">Loading...</h1>
@@ -91,6 +91,11 @@
                         <span><strong>Batch:</strong> <span id="batch">Not set</span></span>
                     </li>
                 </ul>
+                <!-- Social Links Section (hidden by default) -->
+                <div id="socialLinksSection" style="display: none; margin-top: 20px;">
+                    <h4>Other Links</h4>
+                    <div id="socialLinksContainer" class="social-links"></div>
+                </div>
             </aside>
 
             <!-- Right Column: Posts -->
@@ -98,7 +103,7 @@
                 <div class="post-box">
                     <h3 class="share-heading">Share your journey</h3>
                     <div class="post-input-area">
-                        <img src="https://via.placeholder.com/40" alt="You" id="posterPic">
+                        <img src="https://placehold.co/40" alt="You" id="posterPic">
                         <textarea id="postText" placeholder="Share your journey..."></textarea>
                     </div>
                     <button id="postBtn">Post</button>
