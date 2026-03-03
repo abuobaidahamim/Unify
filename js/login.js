@@ -33,22 +33,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const result = await loginUser(email, password);
-        // if (result.success) {
-        //     // Redirect to profile setup (since we haven't built dashboard yet)
-        //     window.location.href = 'profile-setup.html';
-        // } else {
-        //     emailError.textContent = result.message || 'Login failed.';
-        // }
         if (result.success) {
-        // Check if user has a profile
-        const hasProfile = await userHasProfile();
-        if (hasProfile) {
-            window.location.href = 'dashboard.html';
+            console.log('Login successful for:', email);
+            console.log('Checking if user has profile...');
+            const hasProfile = await userHasProfile();
+            console.log('hasProfile =', hasProfile);
+            if (hasProfile) {
+                console.log('Redirecting to dashboard');
+                window.location.href = 'home.html';
+            } else {
+                console.log('Redirecting to profile-setup');
+                window.location.href = 'profile-setup.html';
+            }
         } else {
-            window.location.href = 'profile-setup.html';
-        }
-        } else {
-            emailError.textContent = result.message || 'Login failed.';
+            if (result.code === 'auth/invalid-login-credentials') {
+                emailError.innerHTML = 'Invalid email or password. <a href="signup.html" style="color:#1877f2; text-decoration:underline;">Create new account</a>';
+            } else {
+                emailError.textContent = result.message || 'Login failed.';
+            }
         }
     });
 });

@@ -12,7 +12,6 @@
     <div class="container">
         <div class="edit-card">
             <div class="brand">
-                <!-- Logo removed -->
                 <h1>Edit Profile</h1>
             </div>
 
@@ -47,7 +46,7 @@
                     </div>
                 </div>
 
-                <!-- Original Profile Setup Fields -->
+                <!-- Basic Information (same as profile-setup) -->
                 <div class="form-section">
                     <h3>Basic Information</h3>
                     <div class="name-row">
@@ -66,40 +65,46 @@
                         <input type="date" id="dob" required>
                     </div>
 
+                    <!-- University – only Daffodil International University -->
                     <div class="input-group">
                         <label for="university">University</label>
                         <select id="university" required>
                             <option value="" disabled>Select your university</option>
-                            <option value="DIU">Daffodil International University</option>
-                            <option value="DU">University of Dhaka</option>
-                            <option value="BUET">BUET</option>
-                            <option value="JU">Jahangirnagar University</option>
+                            <option value="Daffodil International University">Daffodil International University</option>
                         </select>
                     </div>
 
+                    <!-- Department dropdown (updated list) -->
                     <div class="input-group">
                         <label for="department">Department</label>
                         <select id="department" required>
-                            <option value="" disabled>Select your department</option>
-                            <option value="CSE">Computer Science & Engineering</option>
-                            <option value="EEE">Electrical & Electronic Engineering</option>
-                            <option value="BBA">Business Administration</option>
-                            <option value="English">English</option>
+                            <option value="" disabled selected>Select your department</option>
+                            <option value="Software Engineering (SWE)">Software Engineering (SWE)</option>
+                            <option value="Innovation & Entrepreneurship">Innovation & Entrepreneurship</option>
+                            <option value="Computing and Information System (CIS)">Computing and Information System (CIS)</option>
+                            <option value="Multimedia & Creative Technology (MCT)">Multimedia & Creative Technology (MCT)</option>
+                            <option value="Information Technology & Management (ITM)">Information Technology & Management (ITM)</option>
+                            <option value="Law">Law</option>
+                            <option value="Journalism, Media and Communication (JMC)">Journalism, Media and Communication (JMC)</option>
+                            <option value="Textile Engineering (TE)">Textile Engineering (TE)</option>
+                            <option value="Architecture">Architecture</option>
+                            <option value="Civil Engineering (CE)">Civil Engineering (CE)</option>
+                            <option value="Pharmacy">Pharmacy</option>
+                            <option value="Nutrition and Food Engineering (NFE)">Nutrition and Food Engineering (NFE)</option>
+                            <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                            <option value="Electrical & Electronic Engineering">Electrical & Electronic Engineering</option>
                         </select>
                     </div>
 
+                    <!-- Major (dynamically populated) -->
                     <div class="input-group">
                         <label for="major">Major (if any)</label>
                         <select id="major">
-                            <option value="" disabled>Select major (or None)</option>
-                            <option value="None">None</option>
-                            <option value="CS">Computer Science</option>
-                            <option value="Software Engineering">Software Engineering</option>
-                            <option value="Data Science">Data Science</option>
-                            <option value="Marketing">Marketing</option>
+                            <option value="" disabled selected>Select major (or None)</option>
                         </select>
                     </div>
 
+                    <!-- Status (student/alumni) – always show batch -->
                     <div class="input-group">
                         <label>Status</label>
                         <div class="radio-group">
@@ -108,22 +113,23 @@
                         </div>
                     </div>
 
-                    <div class="input-group conditional" id="batchGroup" style="display: none;">
+                    <!-- Batch (always visible) -->
+                    <div class="input-group">
                         <label for="batch">Batch</label>
-                        <input type="text" id="batch" placeholder="e.g., 2024">
+                        <input type="text" id="batch" placeholder="e.g., 2024" required>
                     </div>
 
+                    <!-- Employment Status (Job, Business, None) -->
                     <div class="input-group">
-                        <label>Employment Status</label>
+                        <label>Are you currently employed?</label>
                         <div class="radio-group">
                             <label><input type="radio" name="employment" value="job"> Job</label>
-                            <label><input type="radio" name="employment" value="entrepreneur"> Entrepreneur</label>
                             <label><input type="radio" name="employment" value="business"> Business</label>
                             <label><input type="radio" name="employment" value="none"> None</label>
                         </div>
                     </div>
 
-                    <!-- Conditional fields -->
+                    <!-- Conditional fields for Job -->
                     <div class="conditional" id="jobFields" style="display: none;">
                         <div class="input-group">
                             <label for="company">Company</label>
@@ -135,17 +141,15 @@
                         </div>
                     </div>
 
-                    <div class="conditional" id="entrepreneurFields" style="display: none;">
-                        <div class="input-group">
-                            <label for="sector">Sector</label>
-                            <input type="text" id="sector">
-                        </div>
-                    </div>
-
+                    <!-- Conditional fields for Business (merged) -->
                     <div class="conditional" id="businessFields" style="display: none;">
                         <div class="input-group">
+                            <label for="sector">Sector</label>
+                            <input type="text" id="sector" placeholder="e.g., Tech, Education">
+                        </div>
+                        <div class="input-group">
                             <label for="businessType">Type of Business</label>
-                            <input type="text" id="businessType">
+                            <input type="text" id="businessType" placeholder="e.g., Retail, Consulting">
                         </div>
                     </div>
                 </div>

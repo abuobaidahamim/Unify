@@ -184,6 +184,12 @@ body {
     text-decoration: underline;
 }
 
+.note {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 5px;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
     .name-row {

@@ -1,4 +1,4 @@
-/* style-home.css */
+/* people-profile.css */
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +11,7 @@ body {
     min-height: 100vh;
 }
 
-/* Navbar */
+/* Navbar (same as home) */
 .navbar {
     background: linear-gradient(135deg, #a0d2ff, #c4e0ff);
     padding: 10px 20px;
@@ -34,14 +34,7 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    object-fit: contain; /* ensures the image scales without distortion */
-}
-
-.logo-placeholder {
-    width: 40px;
-    height: 40px;
-    background-color: #e0e0e0;
-    border-radius: 50%;
+    object-fit: contain;
 }
 
 .site-name {
@@ -136,292 +129,150 @@ body {
     border-color: #1877f2;
 }
 
-/* Main Layout */
-/* .main-container {
-    display: flex;
+/* Profile Container */
+.profile-container {
     max-width: 1200px;
     margin: 20px auto;
-    gap: 0; /* Blocks touch each other */
-    /* padding: 0 20px; */
-    /* padding: 20px 10px 20px 20px;
-} */ 
-
-/* .main-container {
-    display: flex;
-    max-width: 1200px;
-    margin: 20px auto;
-    gap: 0;
     padding: 0 20px;
-    justify-content: center;  /* centers the two blocks */
-/* } */
-
-.main-container {
-    display: flex;
-    max-width: 1200px;
-    margin: 20px auto;
-    gap: 20px;               /* ← this creates separation */
-    padding: 0 20px;          /* keeps blocks away from browser edges */
-    justify-content: center;
 }
 
-/* Left Sidebar */
-/* .left-sidebar {
-    width: 280px;
+/* Profile Header */
+.profile-header {
     background: white;
-    border-radius: 16px 0 0 16px; /* Rounded left side only */
-    /* padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    height: fit-content;
-    position: sticky;
-    top: 80px;
-    align-self: start;
-} */ 
-
-/* .left-sidebar {
-    width: 280px;
-    background: white;
-    border-radius: 16px 0 0 16px; /* rounded only on left side */
-    /* padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    height: fit-content;
-    position: sticky;
-    top: 80px;
-    align-self: start;
-} */ 
-
-.left-sidebar, .main-content {
     border-radius: 16px;
-    background: white;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-/* .left-sidebar {
-    flex: 1 1 33.333%;       
-    max-width: 33.333%;
-    background: white;
-    border-radius: 16px;       
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    height: fit-content;
-    position: sticky;
-    top: 80px;
-    align-self: start;
-} */
-
-/* Left sidebar specific */
-.left-sidebar {
-    flex: 1 1 33.333%;
-    max-width: 33.333%;
-    height: fit-content;
-    position: sticky;
-    top: 80px;
-    align-self: start;
-}
-
-.profile-card {
-    text-align: center;
+    padding: 30px;
     margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 30px;
 }
 
-.profile-pic-large img {
-    width: 80px;
-    height: 80px;
+.profile-pic img {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    margin-bottom: 10px;
+    object-fit: cover;
 }
 
-#sidebarName {
-    font-size: 1.2rem;
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h1 {
+    font-size: 2rem;
     font-weight: 600;
     color: #1f2937;
     margin-bottom: 5px;
 }
 
-#sidebarBio {
+.profile-info p {
     color: #6b7280;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
-.saved-section {
-    margin-top: 20px;
+.request-btn {
+    padding: 10px 24px;
+    background-color: #42b72a; /* green for request */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.saved-section h4 {
-    margin-bottom: 10px;
+.request-btn:hover {
+    background-color: #36a420;
+}
+
+/* Two Column Layout */
+.profile-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Left Column - Personal Details */
+.personal-details {
+    flex: 1 1 33.333%;
+    max-width: 33.333%;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 100px;
+    align-self: start;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.details-header h3 {
+    font-size: 1.2rem;
     color: #1f2937;
 }
 
-.saved-section ul {
+.details-list {
     list-style: none;
     padding: 0;
 }
 
-.saved-section li {
-    padding: 8px 0;
+.details-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
     border-bottom: 1px solid #eee;
-    color: #4b5563;
-    font-size: 0.9rem;
 }
 
-.logout-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #dc2626;
-    color: white;
-    border: none;
-    border-radius: 8px;
+.details-list li:last-child {
+    border-bottom: none;
+}
+
+.details-list i {
+    width: 20px;
+    color: #1877f2;
+    font-size: 1.1rem;
+}
+
+.details-list span {
+    color: #1f2937;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.details-list strong {
     font-weight: 600;
-    cursor: pointer;
-    margin-top: 20px;
+    margin-right: 5px;
 }
 
-.logout-btn:hover {
-    background-color: #b91c1c;
-}
-
-/* Main Content (Right) */
-/* .main-content {
-    flex: 1;
-    max-width: 600px;
-    background: white;
-    border-radius: 0 16px 16px 0; /* Rounded right side only */
-    /* padding: 20px; */
-    /* padding: 20px 10px 20px 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-} */
-
-/* .main-content {
-    flex: 0 0 500px;        /* Fixed width – adjust this value as needed */
-    /* max-width: 500px;
-    background: white;
-    border-radius: 0 16px 16px 0;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-} */ 
-
-/* .main-content {
-    flex: 0 0 500px;        /* fixed width – adjust as needed */
-    /* max-width: 500px;
-    background: white;
-    border-radius: 0 16px 16px 0; /* rounded only on right side */
-    /* padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-} */ 
-
-/* .main-content {
-    flex: 1 1 66.666%;        
-    max-width: 66.666%;
-    background: white;
-    border-radius: 16px;       
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-} */
-
-/* Main content specific */
-.main-content {
+/* Right Column - Posts */
+.profile-posts {
     flex: 1 1 66.666%;
     max-width: 66.666%;
 }
 
-.share-heading {
+.posts-heading {
     font-size: 1.2rem;
     font-weight: 600;
     color: #1f2937;
     margin-bottom: 15px;
 }
 
-/* .post-box {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-}
-
-.post-input-area {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.post-input-area img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-.post-input-area textarea {
-    flex: 1;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    padding: 10px 15px;
-    resize: none;
-    font-family: inherit;
-    font-size: 0.95rem;
-    outline: none;
-}
-
-.post-input-area textarea:focus {
-    border-color: #1877f2;
-}
-
-#postBtn {
-    float: right;
-    padding: 8px 20px;
-    background-color: #1877f2;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-#postBtn:hover {
-    background-color: #166fe5;
-} */
-.post-box {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-}
-
-.post-input-area {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.post-input-area textarea {
-    flex: 1;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    padding: 10px 15px;
-    resize: none;
-    font-family: inherit;
-    font-size: 0.95rem;
-    outline: none;
-}
-
-.post-input-area textarea:focus {
-    border-color: #1877f2;
-}
-
-#postBtn {
-    float: right;
-    padding: 8px 20px;
-    background-color: #1877f2;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-#postBtn:hover {
-    background-color: #166fe5;
-}
-
 .posts-feed {
-    margin-top: 20px;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .post-item {
@@ -463,7 +314,7 @@ body {
     line-height: 1.5;
 }
 
-/* Filter Modal */
+/* Modal styles (copy from personal-profile.css) */
 .modal {
     display: none;
     position: fixed;
@@ -513,14 +364,14 @@ body {
     font-weight: 500;
 }
 
-.filter-step select, .filter-step input {
+.filter-step select,
+.filter-step input {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 8px;
 }
 
-/* Modal button styling (match personal-profile.css) */
 .filter-actions {
     display: flex;
     justify-content: space-between;
@@ -542,16 +393,12 @@ body {
     color: white;
 }
 
-.filter-actions button.primary:hover {
-    background-color: #166fe5;
-}
-
 .filter-actions button.secondary {
     background-color: #e4e6eb;
 }
 
-.filter-actions button.secondary:hover {
-    background-color: #d8dadf;
+.filter-actions button:hover {
+    opacity: 0.9;
 }
 
 .filter-results {
@@ -577,8 +424,8 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    object-fit: cover;
 }
-
 
 .autocomplete-items {
     position: absolute;
@@ -623,29 +470,20 @@ body {
     margin: 0;
 }
 
-
-
-
 /* Responsive */
 @media (max-width: 768px) {
-    .main-container {
+    .profile-content {
         flex-direction: column;
     }
-    .left-sidebar {
-        width: 100%;
-        border-radius: 16px;
-        margin-bottom: 20px;
+    .personal-details {
+        max-width: 100%;
         position: static;
     }
-    .main-content {
-        border-radius: 16px;
-    }
-    .navbar {
-        flex-wrap: wrap;
-    }
-    .nav-center {
-        order: 3;
+    .profile-posts {
         max-width: 100%;
-        margin-top: 10px;
+    }
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
     }
 }
