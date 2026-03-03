@@ -105,7 +105,7 @@ function displaySearchResults(results) {
         results.forEach(user => {
             html += `
                 <div class="filter-result-item" data-userid="${user.id}">
-                    <img src="${user.profilePicURL || 'https://via.placeholder.com/40'}" alt="Profile">
+                    <img src="${user.profilePicURL || 'https://placehold.co/40'}" alt="Profile">
                     <span>${user.firstName || ''} ${user.lastName || ''}</span>
                 </div>
             `;
@@ -379,7 +379,7 @@ async function performFilterSearch(criteria) {
                 const user = doc.data();
                 resultsHtml += `
                     <div class="filter-result-item" data-userid="${doc.id}">
-                        <img src="${user.profilePicURL || 'https://via.placeholder.com/40'}" alt="Profile">
+                        <img src="${user.profilePicURL || 'https://placehold.co/40'}" alt="Profile">
                         <span>${user.firstName || ''} ${user.lastName || ''}</span>
                     </div>
                 `;
