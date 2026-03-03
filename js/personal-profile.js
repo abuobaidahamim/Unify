@@ -15,11 +15,15 @@ firebase.auth().onAuthStateChanged(async (user) => {
     currentUser = user;
     await loadProfile();
 
+
     // After profile is loaded, set profile picture if exists
     if (currentProfile && currentProfile.profilePicURL) {
         document.getElementById('profilePic').src = currentProfile.profilePicURL;
         document.getElementById('navProfilePic').src = currentProfile.profilePicURL;
+        document.getElementById('posterPic').src = currentProfile.profilePicURL;
     }
+
+    displaySocialLinks(currentProfile);
 
     // Load user's posts
     loadUserPosts();
@@ -97,8 +101,8 @@ function setupEventListeners() {
             await db.collection('posts').add({
                 userId: currentUser.uid,
                 text: text,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                profilePicURL: currentProfile?.profilePicURL || null
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                // No profilePicURL stored
             });
             postText.value = '';
             loadUserPosts();
@@ -112,8 +116,8 @@ function setupEventListeners() {
     document.getElementById('profileIcon').addEventListener('click', () => {
         window.location.reload();
     });
-    // Nav icons (friends, messages, notifications) placeholders
-    document.querySelectorAll('.nav-icon:not([data-tooltip="Home"])').forEach(icon => {
+    // Nav icons (friends, messages) placeholders
+    document.querySelectorAll('.nav-icon:not([data-tooltip="Home"]):not([data-tooltip="Notifications"])').forEach(icon => {
         icon.addEventListener('click', (e) => {
             e.preventDefault();
             alert(`${icon.getAttribute('data-tooltip')} page coming soon!`);
@@ -137,13 +141,14 @@ async function loadUserPosts() {
         }
 
         let html = '';
+        const profilePicURL = currentProfile?.profilePicURL || 'https://placehold.co/40';
         snapshot.forEach(doc => {
             const post = doc.data();
             const time = post.createdAt ? post.createdAt.toDate().toLocaleString() : 'Just now';
             html += `
                 <div class="post-item">
                     <div class="post-header">
-                        <img src="${post.profilePicURL || 'https://via.placeholder.com/40'}" alt="Profile">
+                        <img src="${profilePicURL}" alt="Profile">
                         <span class="post-author">${document.getElementById('profileName').textContent}</span>
                         <span class="post-time">${time}</span>
                     </div>
@@ -156,4 +161,28 @@ async function loadUserPosts() {
         console.error('Error loading posts:', error);
         postsContainer.innerHTML = `<p>Error loading posts: ${error.message}</p>`;
     }
+}
+
+function displaySocialLinks(profile) {
+    const section = document.getElementById('socialLinksSection');
+    const container = document.getElementById('socialLinksContainer');
+    const links = [];
+
+    if (profile.github) links.push({ url: profile.github, icon: 'fab fa-github', name: 'GitHub' });
+    if (profile.linkedin) links.push({ url: profile.linkedin, icon: 'fab fa-linkedin', name: 'LinkedIn' });
+    if (profile.facebook) links.push({ url: profile.facebook, icon: 'fab fa-facebook', name: 'Facebook' });
+    if (profile.instagram) links.push({ url: profile.instagram, icon: 'fab fa-instagram', name: 'Instagram' });
+    if (profile.x) links.push({ url: profile.x, icon: 'fab fa-twitter', name: 'X' });
+
+    if (links.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    let html = '';
+    links.forEach(link => {
+        html += `<a href="${link.url}" target="_blank" rel="noopener noreferrer" title="${link.name}"><i class="${link.icon}"></i></a>`;
+    });
+    container.innerHTML = html;
+    section.style.display = 'block';
 }
