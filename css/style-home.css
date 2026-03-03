@@ -378,6 +378,31 @@ body {
 #postBtn:hover {
     background-color: #166fe5;
 } */
+
+/* Profile picture in post creation */
+.post-input-area img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Profile picture in posts */
+.post-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Profile picture in edit profile preview */
+#profilePicPreview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .post-box {
     margin-bottom: 20px;
     padding-bottom: 20px;
@@ -439,12 +464,12 @@ body {
     gap: 10px;
     margin-bottom: 10px;
 }
-
+/* 
 .post-header img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-}
+} */
 
 .post-author {
     font-weight: 600;
