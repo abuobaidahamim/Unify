@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'personal-profile.html';
         });
 
-        // Other icons (friends, messages, notifications) placeholders
-        document.querySelectorAll('.nav-icon:not([data-tooltip="Home"])').forEach(icon => {
+        // Other icons (friends, messages) placeholders
+        document.querySelectorAll('.nav-icon:not([data-tooltip="Home"]):not([data-tooltip="Notifications"])').forEach(icon => {
             icon.addEventListener('click', (e) => {
                 e.preventDefault();
                 alert(`${icon.getAttribute('data-tooltip')} page coming soon!`);
