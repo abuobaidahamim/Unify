@@ -189,6 +189,21 @@ body {
     background-color: #36a420;
 }
 
+.request-btn.connected {
+    background-color: #6b7280;
+    cursor: default;
+}
+.request-btn.sent {
+    background-color: #f59e0b;
+    cursor: default;
+}
+.request-btn.accept {
+    background-color: #10b981;
+}
+.request-btn.accept:hover {
+    background-color: #059669;
+}
+
 /* Two Column Layout */
 .profile-content {
     display: flex;
@@ -255,10 +270,50 @@ body {
     margin-right: 5px;
 }
 
+/* Social links */
+.social-links {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+.social-links a {
+    color: #1877f2;
+    font-size: 1.8rem;
+    transition: color 0.2s;
+}
+.social-links a:hover {
+    color: #166fe5;
+}
+
 /* Right Column - Posts */
 .profile-posts {
     flex: 1 1 66.666%;
     max-width: 66.666%;
+}
+
+/* Profile picture in post creation */
+.post-input-area img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Profile picture in posts */
+.post-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Profile picture in edit profile preview */
+#profilePicPreview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .posts-heading {
@@ -291,11 +346,11 @@ body {
     margin-bottom: 10px;
 }
 
-.post-header img {
+/* .post-header img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-}
+} */
 
 .post-author {
     font-weight: 600;
