@@ -193,27 +193,42 @@ export async function updateUserProfile(profileData) {
  * @returns {Promise<string>} The download URL of the uploaded image.
  */
 
+
+// js/auth.js – add this function (keep your existing imports and other functions)
+
+const IMGBB_API_KEY = 'ee7f7e80eab6dd342c95ec47b83f84e1'; // <-- paste your key
+
 export async function uploadProfilePicture(file) {
     const user = auth.currentUser;
     if (!user) throw new Error("Not authenticated");
 
-    console.log('Starting upload to Firebase Storage');
-    const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(`profilePics/${user.uid}`);
+    // Prepare form data for ImgBB
+    const formData = new FormData();
+    formData.append('image', file);
 
     try {
-        // Upload the file
-        const snapshot = await fileRef.put(file);
-        console.log('File uploaded, getting download URL...');
-        const downloadURL = await snapshot.ref.getDownloadURL();
-        console.log('Download URL obtained:', downloadURL);
+        // Upload to ImgBB
+        const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+            method: 'POST',
+            body: formData
+        });
 
-        // Update Firestore
-        await db.collection('users').doc(user.uid).update({ profilePicURL: downloadURL });
-        console.log('Firestore updated with profilePicURL');
-        return downloadURL;
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error?.message || 'Upload failed');
+        }
+
+        const data = await response.json();
+        const imageUrl = data.data.url; // Direct image URL
+
+        // Save the URL to Firestore (your existing logic)
+        await db.collection('users').doc(user.uid).update({
+            profilePicURL: imageUrl
+        });
+
+        return imageUrl;
     } catch (error) {
-        console.error('Error in uploadProfilePicture:', error);
-        throw error; // Re-throw so the caller can handle it
+        console.error('ImgBB upload error:', error);
+        throw error;
     }
 }
