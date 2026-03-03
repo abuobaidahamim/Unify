@@ -35,12 +35,12 @@
             </div>
         </div>
         <div class="nav-right">
-            <a href="#" class="nav-icon" title="Home"><i class="fas fa-home"></i></a>
-            <a href="#" class="nav-icon" title="Friends"><i class="fas fa-user-friends"></i></a>
-            <a href="#" class="nav-icon" title="Messages"><i class="fas fa-envelope"></i></a>
-            <a href="#" class="nav-icon" title="Notifications"><i class="fas fa-bell"></i></a>
+            <a href="home.html" class="nav-icon" data-tooltip="Home"><i class="fas fa-home"></i></a>
+            <a href="#" class="nav-icon" data-tooltip="Friends"><i class="fas fa-user-friends"></i></a>
+            <a href="#" class="nav-icon" data-tooltip="Messages"><i class="fas fa-envelope"></i></a>
+            <a href="notifications.html" class="nav-icon" data-tooltip="Notifications"><i class="fas fa-bell"></i></a>
             <div class="profile-icon" id="profileIcon">
-                <img src="https://via.placeholder.com/40" alt="Profile" id="navProfilePic">
+                <img src="https://placehold.co/40" alt="Profile" id="navProfilePic">
             </div>
         </div>
     </nav>
@@ -51,7 +51,7 @@
         <aside class="left-sidebar">
             <div class="profile-card">
                 <div class="profile-pic-large">
-                    <img src="https://via.placeholder.com/80" alt="Profile" id="sidebarProfilePic">
+                    <img src="https://placehold.co/80" alt="Profile" id="sidebarProfilePic">
                 </div>
                 <h3 id="sidebarName">Loading...</h3>
                 <p id="sidebarBio">No bio yet.</p>
@@ -71,7 +71,7 @@
             <div class="post-box">
                 <h3 class="share-heading">Share your journey</h3>
                 <div class="post-input-area">
-                    <img src="https://via.placeholder.com/40" alt="You" id="posterPic">
+                    <img src="https://placehold.co/40" alt="You" id="posterPic">
                     <textarea id="postText" placeholder="Share your journey..."></textarea>
                 </div>
                 <button id="postBtn">Post</button>
@@ -104,6 +104,6 @@
     <!-- Our modules -->
     <script type="module" src="js/home.js"></script>
     <script type="module" src="js/post.js"></script>
-    <script type="module" src="js/search.js"></script>
+    <script type="module" src="js/filter.js"></script>
 </body>
 </html>
