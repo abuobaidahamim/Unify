@@ -1,16 +1,24 @@
 // js/people-profile.js
 import { initFilter } from './filter.js';
+import { getCurrentUserProfile } from './auth.js';
 
 const db = firebase.firestore();
 
 // Get target user ID from URL
 const urlParams = new URLSearchParams(window.location.search);
 const targetUserId = urlParams.get('uid');
+let targetProfile = null;
 
 firebase.auth().onAuthStateChanged(async (currentUser) => {
     if (!currentUser) {
         window.location.href = 'index.html';
         return;
+    }
+
+    // Load current user's profile for navbar picture
+    const currentProfile = await getCurrentUserProfile();
+    if (currentProfile && currentProfile.profilePicURL) {
+        document.getElementById('navProfilePic').src = currentProfile.profilePicURL;
     }
 
     if (!targetUserId) {
@@ -32,17 +40,12 @@ firebase.auth().onAuthStateChanged(async (currentUser) => {
     // Initialize filter
     initFilter();
 
-    // Nav icons (friends, messages, notifications) placeholders
-    document.querySelectorAll('.nav-icon:not([data-tooltip="Home"])').forEach(icon => {
+    // Nav icons (friends, messages) placeholders
+    document.querySelectorAll('.nav-icon:not([data-tooltip="Home"]):not([data-tooltip="Notifications"])').forEach(icon => {
         icon.addEventListener('click', (e) => {
             e.preventDefault();
             alert(`${icon.getAttribute('data-tooltip')} page coming soon!`);
         });
-    });
-
-    // Setup request button (placeholder)
-    document.getElementById('requestBtn').addEventListener('click', () => {
-        alert('Friend request feature coming soon!');
     });
 
     // Profile icon click – go to personal profile
@@ -59,54 +62,83 @@ async function loadUserProfile(uid) {
             window.location.href = 'home.html';
             return;
         }
-        const profile = doc.data();
+        targetProfile = doc.data();
 
         // Fill top section
-        const fullName = `${profile.firstName || ''} ${profile.lastName || ''}`.trim() || 'User';
+        const fullName = `${targetProfile.firstName || ''} ${targetProfile.lastName || ''}`.trim() || 'User';
         document.getElementById('profileName').textContent = fullName;
-        document.getElementById('profileBio').textContent = profile.bio || 'No bio yet.';
+        document.getElementById('profileBio').textContent = targetProfile.bio || 'No bio yet.';
 
         // Set profile picture if exists
-        if (profile.profilePicURL) {
-            document.getElementById('profilePic').src = profile.profilePicURL;
+        if (targetProfile.profilePicURL) {
+            document.getElementById('profilePic').src = targetProfile.profilePicURL;
         }
 
         // Fill personal details
-        document.getElementById('currentLocation').textContent = profile.currentLocation || 'Not set';
-        document.getElementById('permanentLocation').textContent = profile.permanentLocation || 'Not set';
+        document.getElementById('currentLocation').textContent = targetProfile.currentLocation || 'Not set';
+        document.getElementById('permanentLocation').textContent = targetProfile.permanentLocation || 'Not set';
 
         // Job details
-        const employment = profile.employment;
+        const employment = targetProfile.employment;
         const jobItem = document.getElementById('jobItem');
         const jobSpan = document.getElementById('jobDetails');
-        if (employment === 'job' && profile.company && profile.role) {
+        if (employment === 'job' && targetProfile.company && targetProfile.role) {
             jobItem.style.display = 'flex';
-            jobSpan.textContent = `${profile.company}, ${profile.role}`;
-        } else if (employment === 'entrepreneur' && profile.sector) {
+            jobSpan.textContent = `${targetProfile.company}, ${targetProfile.role}`;
+        } else if (employment === 'entrepreneur' && targetProfile.sector) {
             jobItem.style.display = 'flex';
-            jobSpan.textContent = `Entrepreneur (${profile.sector})`;
-        } else if (employment === 'business' && profile.businessType) {
+            jobSpan.textContent = `Entrepreneur (${targetProfile.sector})`;
+        } else if (employment === 'business' && targetProfile.businessType) {
             jobItem.style.display = 'flex';
-            jobSpan.textContent = `Business (${profile.businessType})`;
+            jobSpan.textContent = `Business (${targetProfile.businessType})`;
         } else {
             jobItem.style.display = 'none';
         }
 
         // University
-        document.getElementById('university').textContent = profile.university || 'Not set';
+        document.getElementById('university').textContent = targetProfile.university || 'Not set';
 
         // Department and Major
-        const dept = profile.department || 'Not set';
-        const major = profile.major && profile.major !== 'None' ? `Major in ${profile.major}` : '';
+        const dept = targetProfile.department || 'Not set';
+        const major = targetProfile.major && targetProfile.major !== 'None' ? `Major in ${targetProfile.major}` : '';
         document.getElementById('departmentMajor').textContent = major ? `${dept} (${major})` : dept;
 
         // Batch
-        document.getElementById('batch').textContent = profile.batch || 'Not set';
+        document.getElementById('batch').textContent = targetProfile.batch || 'Not set';
 
+        // Display social links
+        displaySocialLinks(targetProfile);
+
+        // Check friend status and set up button
+        await checkFriendStatus(firebase.auth().currentUser.uid, uid);
     } catch (error) {
         console.error('Error loading profile:', error);
         alert('Error loading profile.');
     }
+}
+
+function displaySocialLinks(profile) {
+    const section = document.getElementById('socialLinksSection');
+    const container = document.getElementById('socialLinksContainer');
+    const links = [];
+
+    if (profile.github) links.push({ url: profile.github, icon: 'fab fa-github', name: 'GitHub' });
+    if (profile.linkedin) links.push({ url: profile.linkedin, icon: 'fab fa-linkedin', name: 'LinkedIn' });
+    if (profile.facebook) links.push({ url: profile.facebook, icon: 'fab fa-facebook', name: 'Facebook' });
+    if (profile.instagram) links.push({ url: profile.instagram, icon: 'fab fa-instagram', name: 'Instagram' });
+    if (profile.x) links.push({ url: profile.x, icon: 'fab fa-twitter', name: 'X' });
+
+    if (links.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    let html = '';
+    links.forEach(link => {
+        html += `<a href="${link.url}" target="_blank" rel="noopener noreferrer" title="${link.name}"><i class="${link.icon}"></i></a>`;
+    });
+    container.innerHTML = html;
+    section.style.display = 'block';
 }
 
 async function loadUserPosts(uid) {
@@ -125,14 +157,17 @@ async function loadUserPosts(uid) {
         }
 
         let html = '';
+        const profilePicURL = targetProfile?.profilePicURL || 'https://placehold.co/40';
+        const userName = `${targetProfile?.firstName || ''} ${targetProfile?.lastName || ''}`.trim() || 'User';
+
         snapshot.forEach(doc => {
             const post = doc.data();
             const time = post.createdAt ? post.createdAt.toDate().toLocaleString() : 'Just now';
             html += `
                 <div class="post-item">
                     <div class="post-header">
-                        <img src="${post.profilePicURL || 'https://via.placeholder.com/40'}" alt="Profile">
-                        <span class="post-author">${document.getElementById('profileName').textContent}</span>
+                        <img src="${profilePicURL}" alt="Profile">
+                        <span class="post-author">${userName}</span>
                         <span class="post-time">${time}</span>
                     </div>
                     <div class="post-content">${post.text}</div>
@@ -143,5 +178,146 @@ async function loadUserPosts(uid) {
     } catch (error) {
         console.error('Error loading posts:', error);
         postsContainer.innerHTML = `<p>Error loading posts: ${error.message}</p>`;
+    }
+}
+
+// Friend request functions
+async function checkFriendStatus(currentUid, targetUid) {
+    const requestBtn = document.getElementById('requestBtn');
+    if (!requestBtn) return;
+
+    // Check for accepted request from current user to target
+    const sentAccepted = await db.collection('friendRequests')
+        .where('fromUserId', '==', currentUid)
+        .where('toUserId', '==', targetUid)
+        .where('status', '==', 'accepted')
+        .limit(1)
+        .get();
+
+    if (!sentAccepted.empty) {
+        requestBtn.innerHTML = '<i class="fas fa-check"></i> Connected';
+        requestBtn.disabled = true;
+        requestBtn.classList.add('connected');
+        return;
+    }
+
+    // Check for accepted request from target to current user
+    const receivedAccepted = await db.collection('friendRequests')
+        .where('fromUserId', '==', targetUid)
+        .where('toUserId', '==', currentUid)
+        .where('status', '==', 'accepted')
+        .limit(1)
+        .get();
+
+    if (!receivedAccepted.empty) {
+        requestBtn.innerHTML = '<i class="fas fa-check"></i> Connected';
+        requestBtn.disabled = true;
+        requestBtn.classList.add('connected');
+        return;
+    }
+
+    // Check for pending request from current user to target
+    const sentPending = await db.collection('friendRequests')
+        .where('fromUserId', '==', currentUid)
+        .where('toUserId', '==', targetUid)
+        .where('status', '==', 'pending')
+        .limit(1)
+        .get();
+
+    if (!sentPending.empty) {
+        requestBtn.innerHTML = '<i class="fas fa-clock"></i> Request Sent';
+        requestBtn.disabled = true;
+        requestBtn.classList.add('sent');
+        return;
+    }
+
+    // Check for pending request from target to current user
+    const receivedPending = await db.collection('friendRequests')
+        .where('fromUserId', '==', targetUid)
+        .where('toUserId', '==', currentUid)
+        .where('status', '==', 'pending')
+        .limit(1)
+        .get();
+
+    if (!receivedPending.empty) {
+        const requestId = receivedPending.docs[0].id;
+        requestBtn.innerHTML = '<i class="fas fa-user-check"></i> Accept Request';
+        requestBtn.classList.add('accept');
+        // Replace click handler to accept
+        requestBtn.replaceWith(requestBtn.cloneNode(true));
+        const newBtn = document.getElementById('requestBtn');
+        newBtn.addEventListener('click', async () => {
+            await acceptRequest(requestId, currentUid, targetUid);
+        });
+        return;
+    }
+
+    // No relationship – show Send Request
+    requestBtn.innerHTML = '<i class="fas fa-user-plus"></i> Send Request';
+    requestBtn.classList.remove('connected', 'sent', 'accept');
+    requestBtn.disabled = false;
+    requestBtn.replaceWith(requestBtn.cloneNode(true));
+    const newBtn = document.getElementById('requestBtn');
+    newBtn.addEventListener('click', async () => {
+        await sendRequest(currentUid, targetUid);
+    });
+}
+
+async function sendRequest(fromUid, toUid) {
+    const requestBtn = document.getElementById('requestBtn');
+    requestBtn.disabled = true;
+    requestBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+    try {
+        await db.collection('friendRequests').add({
+            fromUserId: fromUid,
+            toUserId: toUid,
+            status: 'pending',
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        await db.collection('notifications').add({
+            userId: toUid,
+            type: 'request_received',
+            fromUserId: fromUid,
+            read: false,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        requestBtn.innerHTML = '<i class="fas fa-clock"></i> Request Sent';
+        requestBtn.classList.add('sent');
+    } catch (error) {
+        console.error('Error sending request:', error);
+        alert('Failed to send request.');
+        requestBtn.disabled = false;
+        requestBtn.innerHTML = '<i class="fas fa-user-plus"></i> Send Request';
+    }
+}
+
+async function acceptRequest(requestId, currentUid, fromUid) {
+    const requestBtn = document.getElementById('requestBtn');
+    requestBtn.disabled = true;
+    requestBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Accepting...';
+
+    try {
+        await db.collection('friendRequests').doc(requestId).update({
+            status: 'accepted'
+        });
+
+        await db.collection('notifications').add({
+            userId: fromUid,
+            type: 'request_accepted',
+            fromUserId: currentUid,
+            read: false,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        requestBtn.innerHTML = '<i class="fas fa-check"></i> Connected';
+        requestBtn.classList.add('connected');
+    } catch (error) {
+        console.error('Error accepting request:', error);
+        alert('Failed to accept request.');
+        requestBtn.disabled = false;
+        requestBtn.innerHTML = '<i class="fas fa-user-check"></i> Accept Request';
     }
 }
