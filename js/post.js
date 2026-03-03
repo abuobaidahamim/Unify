@@ -1,17 +1,14 @@
 // js/post.js
-import { getCurrentUserProfile } from './auth.js';  // <-- IMPORT ADDED
-
 const db = firebase.firestore();
 
 export async function createPost(text) {
     const user = firebase.auth().currentUser;
     if (!user) throw new Error('Not authenticated');
-    const userProfile = await getCurrentUserProfile();
+    // No profilePicURL stored – it will be fetched from the user document when displaying
     const post = {
         userId: user.uid,
         text: text,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        profilePicURL: userProfile?.profilePicURL || null
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
     await db.collection('posts').add(post);
 }
@@ -38,11 +35,13 @@ export async function loadPosts() {
             const userDoc = await db.collection('users').doc(post.userId).get();
             const user = userDoc.exists ? userDoc.data() : { firstName: 'Unknown', lastName: '' };
             const userName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Unknown User';
+            // Use the user's current profile picture (or placeholder)
+            const profilePicURL = user.profilePicURL || 'https://placehold.co/40';
             const time = post.createdAt ? post.createdAt.toDate().toLocaleString() : 'Just now';
             html += `
                 <div class="post-item">
                     <div class="post-header">
-                        <img src="${post.profilePicURL || 'https://via.placeholder.com/40'}" alt="Profile">
+                        <img src="${profilePicURL}" alt="Profile">
                         <span class="post-author">${userName}</span>
                         <span class="post-time">${time}</span>
                     </div>
