@@ -2,6 +2,7 @@
 import { getCurrentUserProfile, userHasProfile } from './auth.js';
 import { loadPosts } from './post.js';
 import { initFilter } from './filter.js';
+import { updateNotificationBadge, updateMessagesBadge } from './badge.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     firebase.auth().onAuthStateChanged(async (user) => {
@@ -33,6 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // inside onAuthStateChanged, after loading profile:
+        await updateNotificationBadge();
+        await updateMessagesBadge();
+
         // Load posts and initialize search
         loadPosts();
         // initSearch();
@@ -49,11 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'personal-profile.html';
         });
 
-        // Other icons (friends, messages) placeholders
-        document.querySelectorAll('.nav-icon:not([data-tooltip="Home"]):not([data-tooltip="Notifications"])').forEach(icon => {
+        // Other icons placeholders
+        document.querySelectorAll('.nav-icon:not([data-tooltip="Home"]):not([data-tooltip="Notifications"]):not([data-tooltip="Connections"]):not([data-tooltip="Messages"])').forEach(icon => {
             icon.addEventListener('click', (e) => {
                 e.preventDefault();
-                alert(`${icon.getAttribute('data-tooltip')} page coming soon!`);
+                const pageName = icon.getAttribute('data-tooltip');
+                console.log(`Attempted to navigate to ${pageName} page, but it is under construction.`);
+                alert(`The ${pageName} page is coming soon! We'll notify you when it's ready.`);
             });
         });
     });
