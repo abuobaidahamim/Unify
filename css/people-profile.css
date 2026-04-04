@@ -11,7 +11,7 @@ body {
     min-height: 100vh;
 }
 
-/* Navbar (same as home) */
+/* Navbar */
 .navbar {
     background: linear-gradient(135deg, #a0d2ff, #c4e0ff);
     padding: 10px 20px;
@@ -117,6 +117,27 @@ body {
     z-index: 101;
 }
 
+.nav-icon .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    min-width: 18px;
+    text-align: center;
+}
+
+.notification-item.unread {
+    background-color: #e6f7ff;
+}
+.conversation-item.unread {
+    background-color: #e6f7ff;
+    font-weight: 600;
+}
+
 .profile-icon img {
     width: 40px;
     height: 40px;
@@ -171,9 +192,30 @@ body {
     font-size: 1rem;
 }
 
+.profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;                
+    align-items: flex-end;     
+    min-width: 180px;          
+}
+
+/* Button styles */
+.request-btn,
+.send-message-btn {
+    width: 100%;               
+    margin: 0;                 
+    text-align: center; 
+    cursor: pointer;       
+}
+
+.send-message-btn {
+    margin-left: 0;
+}
+
 .request-btn {
     padding: 10px 24px;
-    background-color: #42b72a; /* green for request */
+    background-color: #42b72a; 
     color: white;
     border: none;
     border-radius: 30px;
@@ -191,17 +233,39 @@ body {
 
 .request-btn.connected {
     background-color: #6b7280;
-    cursor: default;
+    cursor: pointer;
 }
 .request-btn.sent {
     background-color: #f59e0b;
-    cursor: default;
+    cursor: pointer;
+}
+.request-btn.sent:hover {
+    cursor: pointer;
 }
 .request-btn.accept {
     background-color: #10b981;
 }
 .request-btn.accept:hover {
     background-color: #059669;
+}
+
+.send-message-btn {
+    padding: 10px 24px;
+    background-color: #1877f2;  
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 10px; 
+}
+
+.send-message-btn:hover {
+    background-color: #166fe5;
 }
 
 /* Two Column Layout */
@@ -346,12 +410,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* .post-header img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-} */
-
 .post-author {
     font-weight: 600;
     color: #1f2937;
@@ -369,7 +427,15 @@ body {
     line-height: 1.5;
 }
 
-/* Modal styles (copy from personal-profile.css) */
+.post-content a {
+    color: #1877f2;
+    text-decoration: none;
+}
+.post-content a:hover {
+    text-decoration: underline;
+}
+
+/* Modal styles */
 .modal {
     display: none;
     position: fixed;
@@ -524,6 +590,22 @@ body {
     width: auto;
     margin: 0;
 }
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #1877f2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {
