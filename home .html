@@ -15,8 +15,6 @@
     <nav class="navbar">
         <div class="nav-left">
             <img src="logo.jpeg" alt="Unify Logo" class="nav-logo">
-            <!-- <span class="site-name">Unify</span> -->
-            <!-- <div class="logo-placeholder"></div> -->
             <span class="site-name">Unify</span>
         </div>
         <div class="nav-center">
@@ -36,9 +34,15 @@
         </div>
         <div class="nav-right">
             <a href="home.html" class="nav-icon" data-tooltip="Home"><i class="fas fa-home"></i></a>
-            <a href="#" class="nav-icon" data-tooltip="Friends"><i class="fas fa-user-friends"></i></a>
-            <a href="#" class="nav-icon" data-tooltip="Messages"><i class="fas fa-envelope"></i></a>
-            <a href="notifications.html" class="nav-icon" data-tooltip="Notifications"><i class="fas fa-bell"></i></a>
+            <a href="connections.html" class="nav-icon" data-tooltip="Connections"><i class="fas fa-user-friends"></i></a>
+            <a href="messages.html" class="nav-icon" data-tooltip="Messages">
+                <i class="fas fa-envelope"></i>
+                <span class="badge" id="messagesBadge" style="display: none;">0</span>
+            </a>
+            <a href="notifications.html" class="nav-icon" data-tooltip="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="badge" id="notificationsBadge" style="display: none;">0</span>
+            </a>
             <div class="profile-icon" id="profileIcon">
                 <img src="https://placehold.co/40" alt="Profile" id="navProfilePic">
             </div>
@@ -55,12 +59,6 @@
                 </div>
                 <h3 id="sidebarName">Loading...</h3>
                 <p id="sidebarBio">No bio yet.</p>
-            </div>
-            <div class="saved-section">
-                <h4>Saved</h4>
-                <ul id="savedList">
-                    <li>No saved items yet.</li>
-                </ul>
             </div>
             <button id="logoutBtn" class="logout-btn">Logout</button>
         </aside>
