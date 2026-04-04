@@ -33,7 +33,7 @@ function initializeForm() {
             "Robotics & Embedded Systems",
             "Cyber Security"
         ],
-        "Innovation & Entrepreneurship": [
+        "Innovation & Entrepreneurship (IE)": [
             "None",
             "Technopreneurship",
             "Business Analytics & Digital Marketing",
@@ -66,8 +66,8 @@ function initializeForm() {
         "Civil Engineering (CE)": ["None"],
         "Pharmacy": ["None"],
         "Nutrition and Food Engineering (NFE)": ["None"],
-        "Computer Science & Engineering": ["None"],
-        "Electrical & Electronic Engineering": ["None"]
+        "Computer Science & Engineering (CSE)": ["None"],
+        "Electrical & Electronic Engineering (EEE)": ["None"]
     };
 
     // Function to update major dropdown based on selected department
