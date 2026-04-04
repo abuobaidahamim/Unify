@@ -1,10 +1,17 @@
 // js/personal-profile.js
 import { getCurrentUserProfile } from './auth.js';
 import { initFilter } from './filter.js';
+import { updateNotificationBadge, updateMessagesBadge } from './badge.js';
 
 const db = firebase.firestore();
 let currentUser = null;
 let currentProfile = null;
+
+function makeLinksClickable(text) {
+    if (!text) return '';
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, url => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+}
 
 // Check authentication
 firebase.auth().onAuthStateChanged(async (user) => {
@@ -25,6 +32,9 @@ firebase.auth().onAuthStateChanged(async (user) => {
 
     displaySocialLinks(currentProfile);
 
+    await updateNotificationBadge();
+    await updateMessagesBadge();
+    
     // Load user's posts
     loadUserPosts();
     initFilter();
@@ -97,12 +107,22 @@ function setupEventListeners() {
             alert('Please write something to post.');
             return;
         }
+        // try {
+        //     await db.collection('posts').add({
+        //         userId: currentUser.uid,
+        //         text: text,
+        //         createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        //         // No profilePicURL stored
+        //     });
+        //     postText.value = '';
+        //     loadUserPosts();
         try {
             await db.collection('posts').add({
                 userId: currentUser.uid,
                 text: text,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                // No profilePicURL stored
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                userName: `${currentProfile.firstName || ''} ${currentProfile.lastName || ''}`.trim() || 'User',
+                userProfilePicURL: currentProfile.profilePicURL || 'https://placehold.co/40'
             });
             postText.value = '';
             loadUserPosts();
@@ -116,18 +136,20 @@ function setupEventListeners() {
     document.getElementById('profileIcon').addEventListener('click', () => {
         window.location.reload();
     });
-    // Nav icons (friends, messages) placeholders
-    document.querySelectorAll('.nav-icon:not([data-tooltip="Home"]):not([data-tooltip="Notifications"])').forEach(icon => {
+    // Nav icons placeholders
+    document.querySelectorAll('.nav-icon:not([data-tooltip="Home"]):not([data-tooltip="Notifications"]):not([data-tooltip="Connections"]):not([data-tooltip="Messages"])').forEach(icon => {
         icon.addEventListener('click', (e) => {
             e.preventDefault();
-            alert(`${icon.getAttribute('data-tooltip')} page coming soon!`);
+            const pageName = icon.getAttribute('data-tooltip');
+            console.log(`Attempted to navigate to ${pageName} page, but it is under construction.`);
+            alert(`The ${pageName} page is coming soon! We'll notify you when it's ready.`);
         });
     });
 }
 
 async function loadUserPosts() {
     const postsContainer = document.getElementById('postsFeed');
-    postsContainer.innerHTML = '<p>Loading posts...</p>';
+    postsContainer.innerHTML = '<div class="spinner"></div>';
 
     try {
         const snapshot = await db.collection('posts')
@@ -140,19 +162,22 @@ async function loadUserPosts() {
             return;
         }
 
-        let html = '';
         const profilePicURL = currentProfile?.profilePicURL || 'https://placehold.co/40';
+        const userName = `${currentProfile?.firstName || ''} ${currentProfile?.lastName || ''}`.trim() || 'User';
+
+        let html = '';
         snapshot.forEach(doc => {
             const post = doc.data();
             const time = post.createdAt ? post.createdAt.toDate().toLocaleString() : 'Just now';
+            const postContent = makeLinksClickable(post.text);
             html += `
                 <div class="post-item">
                     <div class="post-header">
                         <img src="${profilePicURL}" alt="Profile">
-                        <span class="post-author">${document.getElementById('profileName').textContent}</span>
+                        <span class="post-author">${userName}</span>
                         <span class="post-time">${time}</span>
                     </div>
-                    <div class="post-content">${post.text}</div>
+                    <div class="post-content">${postContent}</div>
                 </div>
             `;
         });
