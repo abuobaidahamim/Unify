@@ -1,14 +1,24 @@
 // js/post.js
+import { getCurrentUserProfile } from './auth.js';
+
 const db = firebase.firestore();
+
+function makeLinksClickable(text) {
+    if (!text) return '';
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, url => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+}
 
 export async function createPost(text) {
     const user = firebase.auth().currentUser;
     if (!user) throw new Error('Not authenticated');
-    // No profilePicURL stored – it will be fetched from the user document when displaying
+    const userProfile = await getCurrentUserProfile();
     const post = {
         userId: user.uid,
         text: text,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        userName: `${userProfile.firstName || ''} ${userProfile.lastName || ''}`.trim() || 'User',
+        userProfilePicURL: userProfile.profilePicURL || 'https://placehold.co/40'
     };
     await db.collection('posts').add(post);
 }
@@ -16,7 +26,7 @@ export async function createPost(text) {
 export async function loadPosts() {
     const postsContainer = document.getElementById('postsFeed');
     if (!postsContainer) return;
-    postsContainer.innerHTML = '<p>Loading posts...</p>';
+    postsContainer.innerHTML = '<div class="spinner"></div>';
 
     try {
         const snapshot = await db.collection('posts')
@@ -29,15 +39,41 @@ export async function loadPosts() {
             return;
         }
 
-        let html = '';
+        // Collect posts and track which need user data
+        const postsData = [];
+        const missingUserIds = new Set();
         for (const doc of snapshot.docs) {
             const post = doc.data();
-            const userDoc = await db.collection('users').doc(post.userId).get();
-            const user = userDoc.exists ? userDoc.data() : { firstName: 'Unknown', lastName: '' };
-            const userName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Unknown User';
-            // Use the user's current profile picture (or placeholder)
-            const profilePicURL = user.profilePicURL || 'https://placehold.co/40';
+            postsData.push(post);
+            if (!post.userName || !post.userProfilePicURL) {
+                missingUserIds.add(post.userId);
+            }
+        }
+
+        // Batch fetch all missing user data in parallel
+        let userMap = {};
+        if (missingUserIds.size > 0) {
+            const userDocs = await Promise.all(
+                Array.from(missingUserIds).map(uid => db.collection('users').doc(uid).get())
+            );
+            userMap = {};
+            userDocs.forEach(doc => {
+                if (doc.exists) userMap[doc.id] = doc.data();
+            });
+        }
+
+        // Build HTML
+        let html = '';
+        for (const post of postsData) {
+            let userName = post.userName;
+            let profilePicURL = post.userProfilePicURL;
+            if (!userName || !profilePicURL) {
+                const user = userMap[post.userId] || { firstName: 'Unknown', lastName: '' };
+                userName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Unknown User';
+                profilePicURL = user.profilePicURL || 'https://placehold.co/40';
+            }
             const time = post.createdAt ? post.createdAt.toDate().toLocaleString() : 'Just now';
+            const postContent = makeLinksClickable(post.text);
             html += `
                 <div class="post-item">
                     <div class="post-header">
@@ -45,7 +81,7 @@ export async function loadPosts() {
                         <span class="post-author">${userName}</span>
                         <span class="post-time">${time}</span>
                     </div>
-                    <div class="post-content">${post.text}</div>
+                    <div class="post-content">${postContent}</div>
                 </div>
             `;
         }
@@ -56,7 +92,6 @@ export async function loadPosts() {
     }
 }
 
-// Attach event listener when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     const postBtn = document.getElementById('postBtn');
     const postText = document.getElementById('postText');
