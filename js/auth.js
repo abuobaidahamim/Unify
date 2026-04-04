@@ -1,6 +1,5 @@
 // js/auth.js - Firebase integrated version
 
-// Firebase is now globally available via the scripts we added
 const auth = firebase.auth();
 const db = firebase.firestore();
 
@@ -11,9 +10,7 @@ const ALLOWED_DOMAIN = ".edu";
  * @param {string} email
  * @returns {boolean}
  */
-// export function isValidStudentEmail(email) {
-//     return email.trim().toLowerCase().endsWith(ALLOWED_DOMAIN);
-// }
+
 export function isValidStudentEmail(email) {
     // Split email into local part and domain
     const parts = email.trim().toLowerCase().split('@');
@@ -22,6 +19,7 @@ export function isValidStudentEmail(email) {
     // Check if the domain contains ".edu" (e.g., .edu, .edu.bd, .edu.au)
     return domain.includes('.edu');
 }
+
 /**
  * Checks password strength and returns an object with individual rule statuses.
  * @param {string} password
@@ -131,7 +129,6 @@ export function getCurrentUser() {
 }
 
 
-
 /**
  * Get the current user's profile data from Firestore.
  * @returns {Promise<Object|null>} The user's profile data or null if not found.
@@ -192,11 +189,7 @@ export async function updateUserProfile(profileData) {
  * @param {File} file - The image file to upload.
  * @returns {Promise<string>} The download URL of the uploaded image.
  */
-
-
-// js/auth.js – add this function (keep your existing imports and other functions)
-
-const IMGBB_API_KEY = 'ee7f7e80eab6dd342c95ec47b83f84e1'; // <-- paste your key
+const IMGBB_API_KEY = 'ee7f7e80eab6dd342c95ec47b83f84e1'; 
 
 export async function uploadProfilePicture(file) {
     const user = auth.currentUser;
@@ -221,12 +214,36 @@ export async function uploadProfilePicture(file) {
         const data = await response.json();
         const imageUrl = data.data.url; // Direct image URL
 
-        // Save the URL to Firestore (your existing logic)
+        // Save the URL to Firestore
         await db.collection('users').doc(user.uid).update({
             profilePicURL: imageUrl
         });
 
         return imageUrl;
+    } catch (error) {
+        console.error('ImgBB upload error:', error);
+        throw error;
+    }
+}
+
+// Upload any image to ImgBB (for chat attachments) – returns URL only, no Firestore update
+export async function uploadChatImage(file) {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+        const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error?.message || 'Upload failed');
+        }
+
+        const data = await response.json();
+        return data.data.url; // Direct image URL
     } catch (error) {
         console.error('ImgBB upload error:', error);
         throw error;
