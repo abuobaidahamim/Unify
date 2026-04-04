@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unify – Welcome</title>
+    <link rel="stylesheet" href="css/preview.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="logo.jpeg" alt="Unify Logo" class="nav-logo">
+            <span class="site-name">Unify</span>
+        </div>
+        <div class="nav-center">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search by name...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+                <button id="filterBtn" class="filter-btn"><i class="fas fa-sliders-h"></i></button>
+            </div>
+            <!-- Filter Modal -->
+            <div id="filterModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Filter Users</h3>
+                    <div id="filterSteps"></div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="index.html" class="nav-btn">Log in</a>
+            <a href="signup.html" class="nav-btn signup">Sign up</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="preview-container">
+        <!-- Left Sticky Info Section -->
+        <aside class="info-section">
+            <div class="university-logo">
+                <img src="university-logo.png" alt="University Logo" class="uni-logo-img">
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h4>Alumni Database</h4>
+                    <p>Connect with graduates worldwide</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-user-graduate"></i>
+                    <h4>Student Groups</h4>
+                    <p>Join communities that share your passion</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-comment-dots"></i>
+                    <h4>Real-time Posting</h4>
+                    <p>Share and engage instantly</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-share-alt"></i>
+                    <h4>Resource Sharing</h4>   
+                    <p>Exchange notes, skills, and opportunities</p>
+                </div>
+            </div>
+            <p class="description">
+                Unify: Redefining collaboration across Daffodil University, connecting every alumni, student, and faculty member into a single, vibrant community. Explore, share, and achieve together.
+            </p>
+        </aside>
+
+        <!-- Right Scrollable Content -->
+        <main class="right-content">
+            <!-- Tagline -->
+            <div class="tagline-section">
+                <h2>Connecting Experience with Ambition</h2>
+            </div>
+
+            <!-- Alumni Section -->
+            <div class="profile-section">
+                <h3>Alumni</h3>
+                <div class="profile-grid" id="alumniGrid">
+                    <!-- Filled by JS -->
+                </div>
+                <button class="see-more-btn" id="seeMoreAlumni">See more</button>
+            </div>
+
+            <!-- Student Section -->
+            <div class="profile-section">
+                <h3>Student</h3>
+                <div class="profile-grid" id="studentGrid">
+                    <!-- Filled by JS -->
+                </div>
+                <button class="see-more-btn" id="seeMoreStudent">See more</button>
+            </div>
+
+            <!-- Posts Section -->
+            <div class="posts-section">
+                <h3>Posts</h3>
+                <div id="postsFeed" class="posts-feed">
+                    <p>Loading posts...</p>
+                </div>
+                <button class="see-more-btn" id="seeMorePosts">See more</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Unify. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAlddaT4Lvy4Mq4gzsCyREuoE9J52WIcM",
+            authDomain: "unify-8d6a4.firebaseapp.com",
+            projectId: "unify-8d6a4",
+            storageBucket: "unify-8d6a4.firebasestorage.app",
+            messagingSenderId: "307932477498",
+            appId: "1:307932477498:web:1f003e61cd355e77389d03"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- Our modules -->
+    <script type="module" src="js/preview.js"></script>
+    <script type="module" src="js/preview-filter.js"></script>
+</body>
+</html>
