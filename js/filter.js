@@ -18,7 +18,7 @@ export function initFilter() {
     searchBtn.addEventListener('click', () => {
         const name = searchInput.value.trim().toLowerCase();
         if (!name) return;
-        // Simple client‑side search (can be improved with a proper index)
+        // Simple client‑side search
         const results = allUsers.filter(u => {
             const fullName = `${u.firstName || ''} ${u.lastName || ''}`.toLowerCase();
             return fullName.includes(name);
@@ -145,7 +145,7 @@ async function renderFilterStep() {
                 // Fixed list from profile-setup
                 return [
                     "Software Engineering (SWE)",
-                    "Innovation & Entrepreneurship",
+                    "Innovation & Entrepreneurship (IE)",
                     "Computing and Information System (CIS)",
                     "Multimedia & Creative Technology (MCT)",
                     "Information Technology & Management (ITM)",
@@ -156,8 +156,8 @@ async function renderFilterStep() {
                     "Civil Engineering (CE)",
                     "Pharmacy",
                     "Nutrition and Food Engineering (NFE)",
-                    "Computer Science & Engineering",
-                    "Electrical & Electronic Engineering"
+                    "Computer Science & Engineering (CSE)",
+                    "Electrical & Electronic Engineering (EEE)"
                 ];
             },
             key: 'department',
@@ -171,7 +171,7 @@ async function renderFilterStep() {
                 // Major options per department (same as profile-setup)
                 const majorMap = {
                     "Software Engineering (SWE)": ["None", "Data Science", "Robotics & Embedded Systems", "Cyber Security"],
-                    "Innovation & Entrepreneurship": ["None", "Technopreneurship", "Business Analytics & Digital Marketing", "Applied Entrepreneurial Finance", "Agripreneurship & Food Engineering", "Social Entrepreneurship", "Manufacturing Industries", "Service Industries"],
+                    "Innovation & Entrepreneurship (IE)": ["None", "Technopreneurship", "Business Analytics & Digital Marketing", "Applied Entrepreneurial Finance", "Agripreneurship & Food Engineering", "Social Entrepreneurship", "Manufacturing Industries", "Service Industries"],
                     "Architecture": ["None", "Architectural Design & Concept Development", "Urban Planning & Design", "Green Architecture & Environmental Simulation", "Architectural Technology & Construction", "History, Theory & Criticism of Architecture", "Landscape Architecture", "Technical systems in building", "Interior Architecture", "Digital Design & Visualization", "Professional Practice & Management"],
                 };
                 return majorMap[criteria.department] || ["None"];
@@ -308,7 +308,7 @@ async function renderFilterStep() {
         <div class="filter-actions">
             ${currentStep > 0 ? '<button class="secondary" id="filterPrev">Previous</button>' : ''}
             ${!step.mandatory ? '<button class="secondary" id="filterSkip">Skip</button>' : ''}
-            <button class="primary" id="filterNext">Next</button>
+            <button class="primary" id="filterNext">Select</button>
         </div>
     `;
 
