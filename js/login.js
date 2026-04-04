@@ -1,5 +1,4 @@
 // js/login.js
-// import { isValidStudentEmail, loginUser } from './auth.js';
 import { isValidStudentEmail, loginUser, userHasProfile } from './auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
