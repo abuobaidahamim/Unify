@@ -1,5 +1,4 @@
 /* style.css */
-
 * {
     margin: 0;
     padding: 0;
@@ -39,19 +38,6 @@ body {
     margin-bottom: 8px;
 }
 
-/* .logo-placeholder {
-    width: 40px;
-    height: 40px;
-    background-color: #e0e0e0;
-    border-radius: 50%;
-    /* You can replace this with an <img> later */
-/* }
-
-.logo-placeholder.small {
-    width: 32px;
-    height: 32px;
-} */ 
-
 .login-logo {
     width: 40px;
     height: 40px;
@@ -62,7 +48,7 @@ body {
 .brand h1 {
     font-size: 2rem;
     font-weight: 600;
-    color: #1877f2; /* Facebook blue, but you can adjust */
+    color: #1877f2; 
 }
 
 .brand h2 {
@@ -205,8 +191,6 @@ a.signup-btn:hover {
     text-decoration: underline;
 }
 
-/* style.css – add these new rules at the end */
-
 /* Error message styling */
 .error-message {
     color: #dc2626;
@@ -223,7 +207,7 @@ a.signup-btn:hover {
     padding: 12px 16px;
     margin-top: 8px;
     font-size: 0.9rem;
-    display: none; /* hidden by default, shown when password field focused */
+    display: none; 
 }
 
 .password-requirements .req-title {
@@ -358,8 +342,6 @@ input[type="date"] {
         gap: 0;
     }
 }
-
-
 
 /* Responsive tweaks */
 @media (max-width: 480px) {
@@ -572,7 +554,7 @@ input[type="date"] {
     display: flex;
     max-width: 1200px;
     margin: 20px auto;
-    gap: 0; /* Remove gap so blocks touch */
+    gap: 0; 
     padding: 0 20px;
 }
 .left-sidebar {
