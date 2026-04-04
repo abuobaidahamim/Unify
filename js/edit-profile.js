@@ -172,8 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// (Keep all your existing helper functions unchanged: populateForm, setupDynamicMajors, setupConditionalFields)
-// ... paste them here exactly as they were
+// Helper functions: populateForm, setupDynamicMajors, setupConditionalFields)
 function populateForm(profile) {
     document.getElementById('bio').value = profile.bio || '';
     document.getElementById('currentLocation').value = profile.currentLocation || '';
@@ -222,7 +221,7 @@ function setupDynamicMajors() {
 
     const majorOptions = {
         "Software Engineering (SWE)": ["None", "Data Science", "Robotics & Embedded Systems", "Cyber Security"],
-        "Innovation & Entrepreneurship": ["None", "Technopreneurship", "Business Analytics & Digital Marketing", "Applied Entrepreneurial Finance", "Agripreneurship & Food Engineering", "Social Entrepreneurship", "Manufacturing Industries", "Service Industries"],
+        "Innovation & Entrepreneurship (IE)": ["None", "Technopreneurship", "Business Analytics & Digital Marketing", "Applied Entrepreneurial Finance", "Agripreneurship & Food Engineering", "Social Entrepreneurship", "Manufacturing Industries", "Service Industries"],
         "Architecture": ["None", "Architectural Design & Concept Development", "Urban Planning & Design", "Green Architecture & Environmental Simulation", "Architectural Technology & Construction", "History, Theory & Criticism of Architecture", "Landscape Architecture", "Technical systems in building", "Interior Architecture", "Digital Design & Visualization", "Professional Practice & Management"],
         "Computing and Information System (CIS)": ["None"],
         "Multimedia & Creative Technology (MCT)": ["None"],
@@ -233,8 +232,8 @@ function setupDynamicMajors() {
         "Civil Engineering (CE)": ["None"],
         "Pharmacy": ["None"],
         "Nutrition and Food Engineering (NFE)": ["None"],
-        "Computer Science & Engineering": ["None"],
-        "Electrical & Electronic Engineering": ["None"]
+        "Computer Science & Engineering (CSE)": ["None"],
+        "Electrical & Electronic Engineering (EEE)": ["None"]
     };
 
     function updateMajorOptions(selectedDept) {
