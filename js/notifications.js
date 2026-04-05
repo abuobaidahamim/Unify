@@ -1,7 +1,7 @@
 // js/notifications.js
 import { initFilter } from './filter.js';
 import { getCurrentUserProfile } from './auth.js';
-import { updateNotificationBadge } from './badge.js';
+import { updateNotificationBadge, updateMessagesBadge } from './badge.js';
 
 const db = firebase.firestore();
 
@@ -112,6 +112,7 @@ async function loadNotifications(uid) {
         });
 
         await updateNotificationBadge();
+        await updateMessagesBadge();
     } catch (error) {
         console.error('Error loading notifications:', error);
         container.innerHTML = '<p>Error loading notifications. <button onclick="location.reload()">Retry</button></p>';
